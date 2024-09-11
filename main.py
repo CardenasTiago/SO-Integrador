@@ -1,7 +1,6 @@
 from Cola import Cola
 from Proceso import Proceso
-import sys
-from os import system
+from politicas.Fcfs import Fcfs
 
 datos = "datos.txt"
 
@@ -15,6 +14,18 @@ with open(datos, 'r') as archivo:
             proceso = Proceso(*datos)
             procesos.encolar(proceso)
     
-
-procesos.imprimir()
-        
+politica = 1    
+    
+while politica != 0:
+    print("SELECCIONE POLITICA")
+    print("1-FCFS") 
+    print("2-Prioridad Externa") 
+    print("3-Round Robin") 
+    print("4-SPN")
+    print("5-SRTN")
+    print("0-SALIR")
+    politica = input("INGRESE: ")
+    
+if(politica == 1):
+   Fcfs = Fcfs(procesos)
+   
