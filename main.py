@@ -14,9 +14,9 @@ with open(datos, 'r') as archivo:
             proceso = Proceso(*datos)
             procesos.encolar(proceso)
     
-politica = 1    
+politica = 0    
     
-while politica != 0:
+while politica == 0:
     print("SELECCIONE POLITICA")
     print("1-FCFS") 
     print("2-Prioridad Externa") 
@@ -26,6 +26,7 @@ while politica != 0:
     print("0-SALIR")
     politica = input("INGRESE: ")
     
-if(politica == 1):
+if(politica == "1"):
    Fcfs = Fcfs(procesos)
+   Fcfs.Iniciar()
    
