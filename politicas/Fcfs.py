@@ -6,7 +6,7 @@ class Fcfs:
     def __init__(self, listaProcesos,):
         self.listaProcesos = Cola()
         self.listaProcesos = listaProcesos
-        self.procesosListos = Cola()
+        self.listaProcesosListos = Cola()
         self.tiempo = 0
         self.tip = 0
         self.tfp = 0
@@ -19,12 +19,22 @@ class Fcfs:
         self.tfp = input("Tiempo que utiliza el sistema operativo para terminar los procesos (TFP): ")
         self.tcp = input("Tiempo de conmutación entre procesos (TCP):")
     
+    
+    def ProcesoListo(self):
+        frente = Proceso()
+        frente = self.listaProcesos.frente()
+        if frente.getTiempoArrivo() == self.tiempo:
+            frente = self.listaProcesos.desencolar()
+            self.listaProcesosListos.encolar(frente)
+        
+    
+    
+    
+    
     def Iniciar(self):
         self.SolicitarDatos()
+        
         while (not self.listaProcesos.esta_vacia()):
-            procesoActual = Proceso()
-            procesoActual = self.listaProcesos.desencolar()
-            
-            if(procesoActual.g)
-                
-            
+            self.ProcesoListo()
+            if procesoActual.getCantRafagas() > 0:
+                pass
