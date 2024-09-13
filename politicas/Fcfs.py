@@ -1,4 +1,5 @@
 from Cola import Cola
+from Proceso import Proceso
 
 class Fcfs:
     
@@ -21,6 +22,9 @@ class Fcfs:
     def Iniciar(self):
         self.SolicitarDatos()
         while (not self.listaProcesos.esta_vacia()):
-            prcoesoActual = self.listaProcesos.dencola()
+            procesoActual = Proceso()
+            procesoActual = self.listaProcesos.desencolar()
+            
+            if(procesoActual.g)
                 
             

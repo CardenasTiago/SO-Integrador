@@ -13,5 +13,23 @@ class Proceso:
     def __str__(self) -> str:
         return f"nombre: {self.nombre}, tiempoArrivo: {self.tiempoArrivo}, cantRafagas: {self.cantRafagas}, duracionRafaga: {self.duracionRafaga}, entradaSalida: {self.entradaSalida}, prioridadExterna: {self.prioridadExterna}"
     
+    def getNombre(self):
+        return self.nombre
+    
+    def getTiempoArrivo(self):
+        return self.tiempoArrivo
+    
+    def getCantRafagas(self):
+        return self.cantRafagas
+    
+    def getDuracionRafaga(self):
+        return self.duracionRafaga
+    
+    def getEntradaSalida(self):
+        return self.entradaSalida
+    
+    def getPrioridadExterna(self):
+        return self.prioridadExterna
+    
     
     
