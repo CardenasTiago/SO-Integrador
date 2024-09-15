@@ -9,6 +9,9 @@ class Proceso:
         self.entradaSalida = entradaSalida
         self.prioridadExterna = prioridadExterna
         self.pcb = Pcb(nombre,"listo",tiempoArrivo,cantRafagas,duracionRafaga,prioridadExterna)
+        self.tiempoEsperando = 0
+        self.tiempoEstadoListo = 0
+        self.tiempoRafaga = 0
         
     def __str__(self) -> str:
         return f"nombre: {self.nombre}, tiempoArrivo: {self.tiempoArrivo}, cantRafagas: {self.cantRafagas}, duracionRafaga: {self.duracionRafaga}, entradaSalida: {self.entradaSalida}, prioridadExterna: {self.prioridadExterna}"
@@ -30,6 +33,12 @@ class Proceso:
     
     def getPrioridadExterna(self):
         return self.prioridadExterna
+    
+    def getTiempoRafaga(self):
+        return self.tiempoRafaga
+    
+    def getTiempoEsperando(self):
+        return self.tiempoEsperando
     
     
     
