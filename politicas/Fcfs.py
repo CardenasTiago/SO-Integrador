@@ -53,7 +53,7 @@ class Fcfs:
                 print("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion")
                 self.conTcp = 0
             else:
-                frente = Proceso()
+                fre = Proceso()
                 frente = self.listaProcesosListos.frente()
                 print("El proceso " + frente.getNombre() + "todavia no puede ejecutar, falta tiempo")
                 self.conTcp += 1
@@ -75,13 +75,15 @@ class Fcfs:
                 if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                     self.finPorceso()
                     self.listoAEjecutar()
+                else:
+                    print("El porceo " + self.procesoEjecutando.getNombre() +" se esta ejecutando")
             else:
                 if self.listaProcesosListos.esta_vacia:
                     self.esperandoAListo()
-                    
-                    
-                    
-                    
+                    if not self.listaProcesosListos.esta_vacia:
+                        self.listoAEjecutar()
+                else:
+                    self.listoAEjecutar()            
                     
             self.tiempo += 1
                 
