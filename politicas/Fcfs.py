@@ -7,6 +7,7 @@ class Fcfs:
         self.listaProcesos = Cola()
         self.listaProcesos = listaProcesos
         self.listaProcesosListos = Cola()
+        self.listaProcesosBloqueados = Cola()
         self.procesoEjecutando = Proceso
         self.procesoEjecutando = None
         self.tiempo = 0
@@ -58,6 +59,9 @@ class Fcfs:
                 print("El proceso " + frente.getNombre() + "todavia no puede ejecutar, falta tiempo")
                 self.conTcp += 1
     
+    def bloqueadoAListo(self):
+        pass
+    
     
     
     def finPorceso(self):
@@ -65,11 +69,9 @@ class Fcfs:
         self.procesoEjecutando = None
         
     
-    
-    
     def Iniciar(self):
         self.SolicitarDatos()
-        while (not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia()):
+        while (not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()):
             print("TIEMPO: " + self.tiempo)
             if self.procesoEjecutando != None:
                 if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
