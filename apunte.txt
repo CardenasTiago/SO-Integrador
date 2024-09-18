@@ -1,1 +1,0 @@
-cambiar inicio: Primero revisar colas y despues ejecutar proceso.

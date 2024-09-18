@@ -35,6 +35,6 @@ while politica == 0:
         if politica == 1:
             fcfsPolitica = Fcfs(procesos)
             fcfsPolitica.Iniciar()
-        # Aquí puedes agregar los otros casos para diferentes políticas
+            #fcfsPolitica.prueba()
     except ValueError:
         print("Por favor, ingrese un número válido.")

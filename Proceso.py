@@ -3,17 +3,17 @@ from Pcb import Pcb
 class Proceso:
     def __init__(self,nombre,tiempoArrivo,cantRafagas,duracionRafaga,entradaSalida,prioridadExterna):
         self.nombre= nombre
-        self.tiempoArrivo = tiempoArrivo
-        self.cantRafagas = cantRafagas
-        self.duracionRafaga = duracionRafaga
-        self.entradaSalida = entradaSalida
-        self.prioridadExterna = prioridadExterna
-        self.pcb = Pcb(nombre,"listo",tiempoArrivo,cantRafagas,duracionRafaga,prioridadExterna)
+        self.tiempoArrivo = int(tiempoArrivo)
+        self.cantRafagas = int(cantRafagas)
+        self.duracionRafaga = int(duracionRafaga)
+        self.entradaSalida = int(entradaSalida)
+        self.prioridadExterna = int(prioridadExterna)
+        self.pcb = Pcb(self.nombre,"listo",self.tiempoArrivo,self.cantRafagas,self.duracionRafaga,self.prioridadExterna)
         self.tiempoEsperando = 0
         self.tiempoBloqueado = 0
         self.tiempoEstadoListo = 0
         self.tiempoRafaga = 0
-        
+            
     def __str__(self) -> str:
         return f"nombre: {self.nombre}, tiempoArrivo: {self.tiempoArrivo}, cantRafagas: {self.cantRafagas}, duracionRafaga: {self.duracionRafaga}, entradaSalida: {self.entradaSalida}, prioridadExterna: {self.prioridadExterna}"
     
@@ -21,25 +21,25 @@ class Proceso:
         return self.nombre
     
     def getTiempoArrivo(self):
-        return self.tiempoArrivo
+        return int(self.tiempoArrivo)
     
     def getCantRafagas(self):
-        return self.cantRafagas
+        return int(self.cantRafagas)
     
     def getDuracionRafaga(self):
-        return self.duracionRafaga
+        return int(self.duracionRafaga)
     
     def getEntradaSalida(self):
-        return self.entradaSalida
+        return int(self.entradaSalida)
     
     def getPrioridadExterna(self):
-        return self.prioridadExterna
+        return int(self.prioridadExterna)
     
     def getTiempoRafaga(self):
-        return self.tiempoRafaga
+        return int(self.tiempoRafaga)
     
     def getTiempoEsperando(self):
-        return self.tiempoEsperando
+        return int(self.tiempoEsperando)
     
     
     
