@@ -30,21 +30,25 @@ class Fcfs:
         
     
     def esperandoAListo(self):
-        frente = Proceso()
-        frente = self.listaProcesos.frente()
-        if frente.getTiempoArrivo() == self.tiempo or frente.getTiempoEsperando() >= 1:
-            if frente.getTiempoArrivo() == self.tiempo:
-                if frente.getTiempoEsperando() == self.tip:
-                    self.ProcesoListo()
-                else:
-                    frente.tiempoEsperando += 1
-            else: 
-                if frente.getTiempoEsperando() >= 1:
-                    if frente.getTiempoEsperando() == self.tip:
-                     self.ProcesoListo()
+        for proceso in self.listaProcesos.items:
+            if proceso.getTiempoArrivo() == self.tiempo or proceso.getTiempoEsperando() >= 1:
+                if proceso.getTiempoArrivo() == self.tiempo:
+                    if proceso.getTiempoEsperando() == self.tip:
+                        proceso = self.listaProcesos.desencolar()
+                        self.listaProcesosListos.encolar(proceso)
+                        print("Proceso " + proceso.getNombre() + " entro a Listo")
+                        #self.ProcesoListo()
                     else:
-                        frente.tiempoEsperando += 1
-    
+                        proceso.tiempoEsperando += 1
+                else:
+                    if proceso.getTiempoEsperando() >= 1:
+                        if proceso.getTiempoEsperando() == self.tip:
+                            proceso = self.listaProcesos.desencolar()
+                            self.listaProcesosListos.encolar(proceso)
+                            print("Proceso " + proceso.getNombre() + " entro a Listo")
+                        else:
+                            proceso.tiempoEsperando += 1
+        
     
     
     def listoAEjecutar(self):
@@ -60,7 +64,12 @@ class Fcfs:
                 self.conTcp += 1
     
     def bloqueadoAListo(self):
-        pass
+        for proceso in self.listaProcesosBloqueados.items:
+            if proceso.tiempoBloqueado < proceso.entradaSalida:
+                proceso.tiempoBloqueado += 1
+            else:
+                listo = self.listaProcesosBloqueados.desencolar()
+                self.listaProcesosListos.encolar(listo)
     
     
     
@@ -72,21 +81,8 @@ class Fcfs:
     def Iniciar(self):
         self.SolicitarDatos()
         while (not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()):
-            print("TIEMPO: " + self.tiempo)
-            if self.procesoEjecutando != None:
-                if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
-                    self.finPorceso()
-                    self.listoAEjecutar()
-                else:
-                    print("El porceo " + self.procesoEjecutando.getNombre() +" se esta ejecutando")
-            else:
-                if self.listaProcesosListos.esta_vacia:
-                    self.esperandoAListo()
-                    if not self.listaProcesosListos.esta_vacia:
-                        self.listoAEjecutar()
-                else:
-                    self.listoAEjecutar()            
-                    
+            self.esperandoAListo()
+            self.bloqueadoAListo()
             self.tiempo += 1
                 
                 

@@ -10,6 +10,7 @@ class Proceso:
         self.prioridadExterna = prioridadExterna
         self.pcb = Pcb(nombre,"listo",tiempoArrivo,cantRafagas,duracionRafaga,prioridadExterna)
         self.tiempoEsperando = 0
+        self.tiempoBloqueado = 0
         self.tiempoEstadoListo = 0
         self.tiempoRafaga = 0
         
