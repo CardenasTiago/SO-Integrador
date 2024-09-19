@@ -78,7 +78,7 @@ class Fcfs:
                 
                 
     def listoABloqueado(self):
-        if self.procesoEjecutando.cantRafagas == 0: 
+        if self.procesoEjecutando.pcb.cantRafagas == 0: 
             if self.contTfp == self.tfp:
                 self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
                 print("proceso "+ self.procesoEjecutando.getNombre()+ " Finalizo")
@@ -89,7 +89,7 @@ class Fcfs:
                 print("falta tfp para finalizar")
         else:
             self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-            self.procesoEjecutando.cantRafagas -= 1
+            self.procesoEjecutando.pcb.cantRafagas -= 1
             print("Proceso "+ self.procesoEjecutando.getNombre()+ " entro en bloqueo")
             self.procesoEjecutando = None
             self.listoAEjecutar()

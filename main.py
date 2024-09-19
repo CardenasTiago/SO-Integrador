@@ -1,6 +1,7 @@
 from Cola import Cola
 from Proceso import Proceso
 from politicas.Fcfs import Fcfs
+from politicas.Spn import Spn
 
 datos = "datos.txt"
 
@@ -36,5 +37,10 @@ while politica == 0:
             fcfsPolitica = Fcfs(procesos)
             fcfsPolitica.Iniciar()
             #fcfsPolitica.prueba()
+        elif politica == 2:
+            spnPolitica = Spn(procesos)
+            #spnPolitica.Iniciar()
+            spnPolitica.prueba()
+        
     except ValueError:
         print("Por favor, ingrese un número válido.")

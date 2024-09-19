@@ -22,6 +22,16 @@ class Cola:
 
     def tamano(self):
         return len(self.items)
+    
+    def ordenar(self, clave=None, reverse=False):
+        """
+        Ordena la cola según una clave proporcionada.
+
+        :param clave: Función que especifica un parámetro por el cual ordenar (similar a sorted).
+        :param reverse: Si es True, ordena en orden descendente.
+        """
+        self.items.sort(key=clave, reverse=reverse)
+    
 
     def imprimir(self):
         print("Contenido de la cola:")
