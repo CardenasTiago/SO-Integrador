@@ -108,7 +108,6 @@ class Fcfs:
                 if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
                     print("Se sigue ejecutanto el proceso "+ self.procesoEjecutando.getNombre())
                     self.procesoEjecutando.tiempoRafaga += 1
-                else:
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado()
 

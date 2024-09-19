@@ -26,9 +26,9 @@ politica = 0
 while politica == 0:
     print("SELECCIONE POLITICA")
     print("1-FCFS") 
-    print("2-Prioridad Externa") 
+    print("2-Spn") 
     print("3-Round Robin") 
-    print("4-SPN")
+    print("4-Prioridad Externa")
     print("5-SRTN")
     print("0-SALIR")
     try:
@@ -39,8 +39,8 @@ while politica == 0:
             #fcfsPolitica.prueba()
         elif politica == 2:
             spnPolitica = Spn(procesos)
-            #spnPolitica.Iniciar()
-            spnPolitica.prueba()
+            spnPolitica.Iniciar()
+            #spnPolitica.prueba()
         
     except ValueError:
         print("Por favor, ingrese un número válido.")

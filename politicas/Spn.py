@@ -102,7 +102,7 @@ class Spn:
             print("TIEMPO " + str(self.tiempo))
             self.esperandoAListo()
             self.bloqueadoAListo()
-            self.listaProcesos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
+            self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
             if self.procesoEjecutando == None:
                 self.listoAEjecutar()
             else:
