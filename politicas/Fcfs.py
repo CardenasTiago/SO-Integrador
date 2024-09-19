@@ -98,7 +98,7 @@ class Fcfs:
     
     def Iniciar(self):
         self.SolicitarDatos()
-        while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or self.procesoEjecutando != None):
+        while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or  self.procesoEjecutando != None):
             print("TIEMPO " + str(self.tiempo))
             self.esperandoAListo()
             self.bloqueadoAListo()
@@ -108,11 +108,8 @@ class Fcfs:
                 if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
                     print("Se sigue ejecutanto el proceso "+ self.procesoEjecutando.getNombre())
                     self.procesoEjecutando.tiempoRafaga += 1
-                    if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
-                        self.listoABloqueado()
+                if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
+                    self.listoABloqueado()
 
             self.tiempo += 1
-                
-            
-                
                 
