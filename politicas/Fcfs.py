@@ -71,52 +71,14 @@ class Fcfs:
                 self.listaProcesosListos.encolar(listo)
                 print("El proceso "+ listo.getNombre() +" pasó de bloqueado a listo")
                 
-    """        
     def listoABloqueado(self):
         if self.procesoEjecutando.pcb.cantRafagas == 0: 
             if self.contTfp == self.tfp:
-                # Finaliza el proceso y reinicia las variables necesarias
                 self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
                 print("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó")
                 self.procesoEjecutando = None
                 self.contTfp = 0
                 self.conTcp = 0
-                # Después de finalizar, intenta ejecutar otro proceso si hay en la cola de listos
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listoAEjecutar()
-                else:
-                    print("No hay más proce and self.tiempo <= 60sos listos para ejecutar.")
-            else:
-                self.contTfp += 1
-                print("Esperando el TFP para finalizar el proceso.")
-        else:
-            if self.conTcp == self.tcp:
-                print("Proceso " + self.procesoEjecutando.getNombre() + " entró en bloqueo")
-                self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-                if self.procesoEjecutando.pcb.cantRafagas > 0:
-                    self.procesoEjecutando.pcb.cantRafagas -= 1
-                self.procesoEjecutando.tiempoBloqueado += 1
-                self.procesoEjecutando = None
-                self.conTcp = 0
-                # Intenta ejecutar otro proceso después de bloquear el actual
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listoAEjecutar()
-                else:
-                    print("No hay más procesos listos para ejecutar.")
-            else:
-                print("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP")
-                self.conTcp += 1
-    """
-    def listoABloqueado(self):
-        if self.procesoEjecutando.pcb.cantRafagas == 0: 
-            if self.contTfp == self.tfp:
-                # Finaliza el proceso y reinicia las variables necesarias
-                self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
-                print("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó")
-                self.procesoEjecutando = None
-                self.contTfp = 0
-                self.conTcp = 0
-                # Después de finalizar, intenta ejecutar otro proceso si hay en la cola de listos
                 if not self.listaProcesosListos.esta_vacia():
                     self.listoAEjecutar()
                 else:
@@ -131,7 +93,6 @@ class Fcfs:
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
-                # Intenta ejecutar otro proceso después de bloquear el actual
                 if not self.listaProcesosListos.esta_vacia():
                     self.listoAEjecutar()
                 else:
