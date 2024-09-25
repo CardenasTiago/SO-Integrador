@@ -401,6 +401,28 @@ TIEMPO 118
 Proceso P4 Finalizó
 No hay más procesos listos para ejecutar.
 --------------------------
+--------------------------
+DATOS SOLICITADOS
+Proceso P3:
+Tiempo de retorno: 56
+Tiempo de retorno: 2.3333333333333335
+--------------------------
+Proceso P5:
+Tiempo de retorno: 57
+Tiempo de retorno: 2.85
+--------------------------
+Proceso P2:
+Tiempo de retorno: 92
+Tiempo de retorno: 5.75
+--------------------------
+Proceso P1:
+Tiempo de retorno: 105
+Tiempo de retorno: 3.5
+--------------------------
+Proceso P4:
+Tiempo de retorno: 112
+Tiempo de retorno: 9.333333333333334
+--------------------------
 Tiempo medio de retorno: 84.4
 CPU utilizada por procesos: 102 (85.71428571428571%)
 CPU utilizada por SO: 20 (16.80672268907563%)

@@ -407,6 +407,28 @@ TIEMPO 120
 Proceso P5 Finalizó
 No hay más procesos listos para ejecutar.
 --------------------------
+--------------------------
+DATOS SOLICITADOS
+Proceso P4:
+Tiempo de retorno: 35
+Tiempo de retorno: 2.9166666666666665
+--------------------------
+Proceso P2:
+Tiempo de retorno: 64
+Tiempo de retorno: 4.0
+--------------------------
+Proceso P1:
+Tiempo de retorno: 89
+Tiempo de retorno: 2.966666666666667
+--------------------------
+Proceso P3:
+Tiempo de retorno: 104
+Tiempo de retorno: 4.333333333333333
+--------------------------
+Proceso P5:
+Tiempo de retorno: 112
+Tiempo de retorno: 5.6
+--------------------------
 Tiempo medio de retorno: 80.8
 CPU utilizada por procesos: 102 (84.29752066115702%)
 CPU utilizada por SO: 20 (16.528925619834713%)

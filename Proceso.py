@@ -47,6 +47,7 @@ class Proceso:
     def calcularTiempoRetorno(self, tiempoFinalizacion):
         self.tiempoRetorno = tiempoFinalizacion - self.tiempoArrivo
         self.tiempoRetornoNormalizado = self.tiempoRetorno / (self.cantRafagas * self.duracionRafaga)
+        
     
     
     

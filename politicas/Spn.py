@@ -150,11 +150,20 @@ class Spn:
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1  
                 self.tiempo += 1    
+            self.log("--------------------------", archivo)    
+            self.log("DATOS SOLICITADOS", archivo)      
+            self.impProcesos(archivo)
             self.calcularTiemposMedios(archivo)
             self.calcularUsoCPU(archivo)
             
-            
-                        
+    def impProcesos(self,archivo):
+        for proceso in self.listaProcesosFinalizados.items:
+           self.log(f"Proceso {proceso.nombre}:", archivo)
+           self.log(f"Tiempo de retorno: {proceso.tiempoRetorno}", archivo)     
+           self.log(f"Tiempo de retorno: {proceso.tiempoRetornoNormalizado}", archivo)    
+           self.log("--------------------------", archivo)
+    
+                           
     def calcularTiemposMedios(self, archivo):
         totalRetorno = sum(self.tiemposRetorno)
         tiempoMedioRetorno = totalRetorno / len(self.tiemposRetorno)
