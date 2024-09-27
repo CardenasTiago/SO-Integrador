@@ -7,6 +7,7 @@ class Spn:
         self.listaProcesosListos = Cola()
         self.listaProcesosBloqueados = Cola()
         self.listaProcesosFinalizados = Cola()
+        self.procesosNuevos = Cola()
         self.procesoEjecutando = None
         self.primerProceso = True
         self.tiempo = 0
@@ -15,6 +16,7 @@ class Spn:
         self.tcp = 0
         self.conTcp = 0
         self.contTfp = 0
+        self.so = False
         
         self.cpuOciosa = 0
         self.cpuSO = 0
@@ -33,25 +35,26 @@ class Spn:
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
-            if proceso.getTiempoArrivo() == self.tiempo or proceso.getTiempoEsperando() >= 1:
                 if proceso.getTiempoArrivo() == self.tiempo:
-                    if proceso.getTiempoEsperando() == self.tip:
-                        x = self.listaProcesos.desencolar()
-                        self.listaProcesosListos.encolar(x)
-                        self.log("Proceso " + x.getNombre() + " entro a Listo", archivo)
-                    else:
-                        proceso.tiempoEsperando += 1
-                        self.cpuSO += 1
+                        self.listaProcesos.desencolarProceso(proceso)
+                        self.procesosNuevos.encolar(proceso)
+                        self.log(f"Proceso {proceso.nombre} espera para ejecutar su TIP",archivo)
+                        
+              
+        if self.procesoEjecutando == None:          
+            frente = self.procesosNuevos.frente()
+            if frente != None:
+                if frente.tiempoEsperando == self.tip:
+                    self.log(f"Proceso {frente.nombre} Entra a Listo",archivo)
+                    self.procesosNuevos.desencolarProceso(frente)
+                    self.listaProcesosListos.encolar(frente)
+                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
+                    self.so = False
                 else:
-                    if proceso.getTiempoEsperando() >= 1:
-                        if proceso.getTiempoEsperando() == self.tip:
-                            x = self.listaProcesos.desencolar()
-                            self.listaProcesosListos.encolar(x)
-                            self.log("Proceso " + x.getNombre() + " entro a Listo", archivo)
-                        else:
-                            proceso.tiempoEsperando += 1
-                            self.cpuSO += 1
-        
+                    frente.tiempoEsperando += 1
+                    self.cpuSO += 1            
+                    self.log(f"Proceso {frente.nombre} ejecuta tip",archivo)  
+                    self.so = True
     
     
     def listoAEjecutar(self, archivo):
@@ -113,7 +116,8 @@ class Spn:
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
+                self.esperandoAListo()
+                if not self.listaProcesosListos.esta_vacia() and not self.so:
                     self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
                     self.listoAEjecutar(archivo)
                 else:
