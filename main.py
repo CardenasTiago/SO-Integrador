@@ -2,7 +2,7 @@ from Cola import Cola
 from Proceso import Proceso
 from politicas.Fcfs import Fcfs
 from politicas.Spn import Spn
-
+from politicas.Srtn import Srtn
 datos = "datos.txt"
 
 procesos = Cola()
@@ -27,9 +27,9 @@ while politica == 0:
     print("SELECCIONE POLITICA")
     print("1-FCFS") 
     print("2-Spn") 
-    print("3-Round Robin") 
+    print("3-SRTN") 
     print("4-Prioridad Externa")
-    print("5-SRTN")
+    print("5-RoundRobin")
     print("0-SALIR")
     try:
         politica = int(input("INGRESE: "))  # Convertimos a entero
@@ -41,6 +41,9 @@ while politica == 0:
             spnPolitica = Spn(procesos)
             spnPolitica.Iniciar()
             #spnPolitica.prueba()
+        elif politica == 3:
+            srtPolitica = Srtn(procesos)
+            srtPolitica.Iniciar()
         
     except ValueError:
         print("Por favor, ingrese un número válido.")

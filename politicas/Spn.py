@@ -61,7 +61,7 @@ class Spn:
                 if self.conTcp == 0 or self.primerProceso:
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
                     self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
-                    self.procesoEjecutando.pcb.cantRafagas -= 1
+                    self.procesoEjecutando.pcb.cantRafagasRestante -= 1
                     self.conTcp = 0
                     self.primerProceso = False
             else:
@@ -81,7 +81,7 @@ class Spn:
                 self.log("El proceso "+ listo.getNombre() +" pasó de bloqueado a listo", archivo)
                 
     def listoABloqueado(self, archivo):
-        if self.procesoEjecutando.pcb.cantRafagas == 0: 
+        if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
             if self.contTfp == self.tfp:
                 # Calcular el tiempo de retorno del proceso finalizado
                 tiempoFinalizacion = self.tiempo

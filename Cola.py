@@ -14,6 +14,13 @@ class Cola:
         else:
             return None
 
+    def desencolarProceso(self, proceso):
+        if proceso in self.items:
+            self.items.remove(proceso)
+            return proceso
+        else:
+            return None
+        
     def frente(self):
         if not self.esta_vacia():
             return self.items[0]

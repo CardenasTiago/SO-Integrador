@@ -4,8 +4,8 @@ class Pcb:
         self.id = id
         self.estado = estado
         self.tiempoArribo = tiempoArribo
-        self.cantRafagas = cantRafagas
-        self.duracionRafaga = duracionRafaga
+        self.cantRafagasRestante = cantRafagas
+        self.duracionRafagaRestante = duracionRafaga
         self.prioridadExterna = prioridadExterna
         
     
