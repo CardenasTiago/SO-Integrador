@@ -87,29 +87,30 @@ class Fcfs:
                 
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
-            if self.contTfp == self.tfp:
-                # Calcular el tiempo de retorno del proceso finalizado
-                tiempoFinalizacion = self.tiempo
-                tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
-                self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
-                
-                # Agregar tiempo de retorno a la lista
-                self.tiemposRetorno.append(tiempoRetorno)
-                
-                self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
-                self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
-                self.procesoEjecutando = None
-                self.contTfp = 0
-                self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listoAEjecutar(archivo)
-                else:
-                    self.log("No hay más procesos listos para ejecutar.", archivo)
-                    self.log("--------------------------",archivo)
-            else:
+            if self.contTfp != self.tfp:
                 self.contTfp += 1
                 self.cpuSO += 1
-                self.log("Esperando el TFP para finalizar el proceso.", archivo)
+                if self.contTfp == self.tfp:
+                    # Calcular el tiempo de retorno del proceso finalizado
+                    tiempoFinalizacion = self.tiempo
+                    tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
+                    self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
+                    
+                    # Agregar tiempo de retorno a la lista
+                    self.tiemposRetorno.append(tiempoRetorno)
+                    
+                    self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
+                    self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
+                    self.procesoEjecutando = None
+                    self.contTfp = 0
+                    self.conTcp = 0
+                    if not self.listaProcesosListos.esta_vacia():
+                        self.listoAEjecutar(archivo)
+                    else:
+                        self.log("No hay más procesos listos para ejecutar.", archivo)
+                        self.log("--------------------------",archivo)
+                else:
+                    self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
         else:
             if self.conTcp == self.tcp:
                 self.log("Proceso " + self.procesoEjecutando.getNombre() + " entró en bloqueo", archivo)
@@ -144,7 +145,7 @@ class Fcfs:
                         self.cpuOciosa += 1
                 else:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
-                        self.log("Se sigue ejecutanto el proceso "+ self.procesoEjecutando.getNombre(), archivo)
+                        self.log("Se  ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():

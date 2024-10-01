@@ -36,23 +36,22 @@ class Srtn:
     def interrupcion(self,archivo):
         self.procesoEjecutando.pcb.duracionRafagaRestante = self.procesoEjecutando.duracionRafaga - self.procesoEjecutando.tiempoRafaga
         self.listaProcesosListos.encolar(self.procesoEjecutando)
+        self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido",archivo)
         self.procesoEjecutando = None
         
-    
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
                 if proceso.getTiempoArrivo() == self.tiempo:
                     if self.procesoEjecutando:
-                        self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido",archivo)
                         self.interrupcion(archivo)
                         self.listaProcesos.desencolarProceso(proceso)
                         self.procesosNuevos.encolar(proceso)
                     else:
                         x = self.listaProcesos.desencolarProceso(proceso)
                         self.procesosNuevos.encolar(x)
-                        self.so = False
-                         
+                        self.so = False                 
+                        
         frente = self.procesosNuevos.frente()
         if frente != None:
             if frente.tiempoEsperando == self.tip:
@@ -73,27 +72,28 @@ class Srtn:
         frente = self.listaProcesosListos.frente()
         if self.procesoEjecutando == None:
             if frente != None:
-                if self.conTcp == 0 or self.primerProceso:
+                if self.conTcp == 0 or self.contTfp == 0 or self.primerProceso:
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
                     self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
                     self.procesoEjecutando.pcb.cantRafagasRestante -= 1
                     self.conTcp = 0
                     self.primerProceso = False
             else:
-                if frente == None:
-                    self.log("No hay proceoso listos", archivo)
+               self.log("No hay proceoso listos", archivo)
     
     
     def bloqueadoAListo(self, archivo):
         for proceso in self.listaProcesosBloqueados.items:
-            if proceso.tiempoBloqueado < proceso.entradaSalida:
-                proceso.tiempoBloqueado += 1
-            else:
+            if proceso.tiempoBloqueado == proceso.entradaSalida:
                 listo = self.listaProcesosBloqueados.desencolar()
                 listo.tiempoBloqueado = 0
                 listo.tiempoRafaga = 0
                 self.listaProcesosListos.encolar(listo)
                 self.log("El proceso "+ listo.getNombre() +" pasó de bloqueado a listo", archivo)
+            else:
+                proceso.tiempoBloqueado += 1
+                self.log("El proceso " + proceso.getNombre() + " esta bloqueado", archivo)
+                
                 
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
@@ -106,16 +106,11 @@ class Srtn:
                 self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
                 self.procesoEjecutando = None
                 self.contTfp = 0
-                self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante, reverse=False)
-                    self.listoAEjecutar(archivo)
-                else:
-                    self.log("No hay más procesos listos para ejecutar.", archivo)
-                    self.log("--------------------------",archivo)
+                self.so = False
             else:
                 self.contTfp += 1
                 self.cpuSO += 1
+                self.so = True
                 self.log("Esperando el TFP para finalizar el proceso.", archivo)
         else:
             if self.conTcp == self.tcp:
@@ -124,21 +119,18 @@ class Srtn:
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante, reverse=False)
-                    self.listoAEjecutar(archivo)
-                else:
-                    self.log("No hay más procesos listos para ejecutar.", archivo)
+                self.so = False
             else:
                 self.log("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP", archivo)
                 self.conTcp += 1
                 self.cpuSO += 1
+                self.so = True
           
             
     def Iniciar(self):
         self.SolicitarDatos()
         with open('logs/log-Srtn.txt', 'w') as archivo:
-            while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or not self.procesoEjecutando == None):
+            while (((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or not self.procesoEjecutando == None) and self.tiempo <= 150):
                 self.log("--------------------",archivo)
                 self.log("TIEMPO " + str(self.tiempo), archivo)
                 self.esperandoAListo(archivo)
@@ -153,7 +145,7 @@ class Srtn:
                         self.cpuOciosa += 1
                 else:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
-                        self.log("Se sigue ejecutanto el proceso "+ self.procesoEjecutando.getNombre(), archivo)
+                        self.log("Se ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():

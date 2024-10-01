@@ -3,6 +3,7 @@ from Proceso import Proceso
 from politicas.Fcfs import Fcfs
 from politicas.Spn import Spn
 from politicas.Srtn import Srtn
+from politicas.PrioridadExterna import PrioridadExterna
 datos = "datos.txt"
 
 procesos = Cola()
@@ -44,6 +45,8 @@ while politica == 0:
         elif politica == 3:
             srtPolitica = Srtn(procesos)
             srtPolitica.Iniciar()
-        
+        elif politica == 4:
+            pePolitica = PrioridadExterna(procesos)
+            pePolitica.Iniciar()
     except ValueError:
         print("Por favor, ingrese un número válido.")

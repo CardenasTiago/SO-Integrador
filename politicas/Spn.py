@@ -62,6 +62,7 @@ class Spn:
         if self.procesoEjecutando == None:
             if frente != None:
                 if self.conTcp == 0 or self.primerProceso:
+                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
                     self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
                     self.procesoEjecutando.pcb.cantRafagasRestante -= 1
@@ -76,6 +77,7 @@ class Spn:
         for proceso in self.listaProcesosBloqueados.items:
             if proceso.tiempoBloqueado < proceso.entradaSalida:
                 proceso.tiempoBloqueado += 1
+                self.log("El proceso " + proceso.getNombre() + " esta bloqueado", archivo)
             else:
                 listo = self.listaProcesosBloqueados.desencolar()
                 listo.tiempoBloqueado = 0
@@ -85,13 +87,14 @@ class Spn:
                 
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
+            if self.contTfp != self.tfp:
+                self.contTfp += 1
+                self.cpuSO += 1
             if self.contTfp == self.tfp:
-                # Calcular el tiempo de retorno del proceso finalizado
                 tiempoFinalizacion = self.tiempo
                 tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
                 self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
                 
-                # Agregar tiempo de retorno a la lista
                 self.tiemposRetorno.append(tiempoRetorno)
                 
                 self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
@@ -105,9 +108,8 @@ class Spn:
                 else:
                     self.log("No hay más procesos listos para ejecutar.", archivo)
                     self.log("--------------------------",archivo)
+                    
             else:
-                self.contTfp += 1
-                self.cpuSO += 1
                 self.log("Esperando el TFP para finalizar el proceso.", archivo)
         else:
             if self.conTcp == self.tcp:
@@ -116,7 +118,7 @@ class Spn:
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
-                self.esperandoAListo()
+                self.esperandoAListo(archivo)
                 if not self.listaProcesosListos.esta_vacia() and not self.so:
                     self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
                     self.listoAEjecutar(archivo)
@@ -145,7 +147,7 @@ class Spn:
                         self.cpuOciosa += 1
                 else:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
-                        self.log("Se sigue ejecutanto el proceso "+ self.procesoEjecutando.getNombre(), archivo)
+                        self.log("Se ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
