@@ -22,6 +22,7 @@ class Spn:
         self.cpuSO = 0
         self.cpuProcesos = 0
         self.tiemposRetorno = []
+        self.tiempoListoTotal = 0
     
     def SolicitarDatos(self):
         print("INGRESE SIGUIENTES DATOS")
@@ -47,14 +48,16 @@ class Spn:
                 if frente.tiempoEsperando == self.tip:
                     self.log(f"Proceso {frente.nombre} Entra a Listo",archivo)
                     self.procesosNuevos.desencolarProceso(frente)
-                    self.listaProcesosListos.encolar(frente)
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
+                    self.procesoEjecutando = frente
+                    self.procesoEjecutando.pcb.cantRafagasRestante -= 1
+                
                     self.so = False
                 else:
                     frente.tiempoEsperando += 1
                     self.cpuSO += 1            
                     self.log(f"Proceso {frente.nombre} ejecuta tip",archivo)  
                     self.so = True
+            
     
     
     def listoAEjecutar(self, archivo):
@@ -62,7 +65,6 @@ class Spn:
         if self.procesoEjecutando == None:
             if frente != None:
                 if self.conTcp == 0 or self.primerProceso:
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
                     self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
                     self.procesoEjecutando.pcb.cantRafagasRestante -= 1
@@ -77,7 +79,6 @@ class Spn:
         for proceso in self.listaProcesosBloqueados.items:
             if proceso.tiempoBloqueado < proceso.entradaSalida:
                 proceso.tiempoBloqueado += 1
-                self.log("El proceso " + proceso.getNombre() + " esta bloqueado", archivo)
             else:
                 listo = self.listaProcesosBloqueados.desencolar()
                 listo.tiempoBloqueado = 0
@@ -87,30 +88,24 @@ class Spn:
                 
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
-            if self.contTfp != self.tfp:
+            if self.contTfp == self.tfp:
+                    # Calcular el tiempo de retorno del proceso finalizado
+                    tiempoFinalizacion = self.tiempo
+                    tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
+                    self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
+                    
+                    # Agregar tiempo de retorno a la lista
+                    self.tiemposRetorno.append(tiempoRetorno)
+                    
+                    self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
+                    self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
+                    self.procesoEjecutando = None
+                    self.contTfp = 0
+                    self.conTcp = 0
+            else:
                 self.contTfp += 1
                 self.cpuSO += 1
-            if self.contTfp == self.tfp:
-                tiempoFinalizacion = self.tiempo
-                tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
-                self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
-                
-                self.tiemposRetorno.append(tiempoRetorno)
-                
-                self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
-                self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
-                self.procesoEjecutando = None
-                self.contTfp = 0
-                self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
-                    self.listoAEjecutar(archivo)
-                else:
-                    self.log("No hay más procesos listos para ejecutar.", archivo)
-                    self.log("--------------------------",archivo)
-                    
-            else:
-                self.log("Esperando el TFP para finalizar el proceso.", archivo)
+                self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
         else:
             if self.conTcp == self.tcp:
                 self.log("Proceso " + self.procesoEjecutando.getNombre() + " entró en bloqueo", archivo)
@@ -119,11 +114,6 @@ class Spn:
                 self.procesoEjecutando = None
                 self.conTcp = 0
                 self.esperandoAListo(archivo)
-                if not self.listaProcesosListos.esta_vacia() and not self.so:
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
-                    self.listoAEjecutar(archivo)
-                else:
-                    self.log("No hay más procesos listos para ejecutar.", archivo)
             else:
                 self.log("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP", archivo)
                 self.conTcp += 1
@@ -132,7 +122,7 @@ class Spn:
             
     def Iniciar(self):
         self.SolicitarDatos()
-        with open('logs/log-Spn.txt', 'w') as archivo:
+        with open('logs/log-fcfs.txt', 'w') as archivo:
             while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or not self.procesoEjecutando == None):
                 self.log("--------------------",archivo)
                 self.log("TIEMPO " + str(self.tiempo), archivo)
@@ -147,20 +137,23 @@ class Spn:
                         self.cpuOciosa += 1
                 else:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
-                        self.log("Se ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
+                        self.log("Se  ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
+                        self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
+                        self.listoAEjecutar(archivo)
                         
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1  
-                self.tiempo += 1    
+                self.tiempo += 1   
             self.log("--------------------------", archivo)    
-            self.log("DATOS SOLICITADOS", archivo)      
+            self.log("DATOS SOLICITADOS", archivo)  
             self.impProcesos(archivo)
             self.calcularTiemposMedios(archivo)
             self.calcularUsoCPU(archivo)
+            
             
     def impProcesos(self,archivo):
         for proceso in self.listaProcesosFinalizados.items:
@@ -168,11 +161,10 @@ class Spn:
            self.log(f"Tiempo de retorno: {proceso.tiempoRetorno}", archivo)     
            self.log(f"Tiempo de retorno: {proceso.tiempoRetornoNormalizado}", archivo)    
            self.log("--------------------------", archivo)
-    
-                           
+                
     def calcularTiemposMedios(self, archivo):
         totalRetorno = sum(self.tiemposRetorno)
-        tiempoMedioRetorno = totalRetorno / len(self.tiemposRetorno)
+        tiempoMedioRetorno = totalRetorno / self.listaProcesosFinalizados.tamano()
         self.log(f"Tiempo medio de retorno: {tiempoMedioRetorno}", archivo)
 
     def calcularUsoCPU(self,archivo):
@@ -183,3 +175,4 @@ class Spn:
         self.log(f"CPU utilizada por procesos: {self.cpuProcesos} ({cpuProcesosPorcentaje}%)",archivo)
         self.log(f"CPU utilizada por SO: {self.cpuSO} ({cpuSOporcentaje}%)",archivo)
         self.log(f"CPU ociosa: {self.cpuOciosa} ({cpuOciosaPorcentaje}%)", archivo)
+        

@@ -49,6 +49,7 @@ class Fcfs:
                     self.log(f"Proceso {frente.nombre} Entra a Listo",archivo)
                     self.procesosNuevos.desencolarProceso(frente)
                     self.procesoEjecutando = frente
+                    self.procesoEjecutando.pcb.cantRafagasRestante -= 1
                 
                     self.so = False
                 else:
@@ -87,10 +88,7 @@ class Fcfs:
                 
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
-            if self.contTfp != self.tfp:
-                self.contTfp += 1
-                self.cpuSO += 1
-                if self.contTfp == self.tfp:
+            if self.contTfp == self.tfp:
                     # Calcular el tiempo de retorno del proceso finalizado
                     tiempoFinalizacion = self.tiempo
                     tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
@@ -104,13 +102,10 @@ class Fcfs:
                     self.procesoEjecutando = None
                     self.contTfp = 0
                     self.conTcp = 0
-                    if not self.listaProcesosListos.esta_vacia():
-                        self.listoAEjecutar(archivo)
-                    else:
-                        self.log("No hay más procesos listos para ejecutar.", archivo)
-                        self.log("--------------------------",archivo)
-                else:
-                    self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
+            else:
+                self.contTfp += 1
+                self.cpuSO += 1
+                self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
         else:
             if self.conTcp == self.tcp:
                 self.log("Proceso " + self.procesoEjecutando.getNombre() + " entró en bloqueo", archivo)
@@ -119,10 +114,6 @@ class Fcfs:
                 self.procesoEjecutando = None
                 self.conTcp = 0
                 self.esperandoAListo(archivo)
-                if not self.listaProcesosListos.esta_vacia() and not self.so:
-                    self.listoAEjecutar(archivo)
-                else:
-                    self.log("No hay más procesos listos para ejecutar.", archivo)
             else:
                 self.log("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP", archivo)
                 self.conTcp += 1
@@ -150,6 +141,7 @@ class Fcfs:
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
+                        self.listoAEjecutar(archivo)
                         
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1  

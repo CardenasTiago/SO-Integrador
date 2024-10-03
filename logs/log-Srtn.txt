@@ -60,13 +60,15 @@ El proceso P5 esta bloqueado
 Proceso P3 entro en ejecucion
 --------------------
 TIEMPO 16
-El proceso P5 pasó de bloqueado a listo
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 17
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 18
+El proceso P5 pasó de bloqueado a listo
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 19
@@ -109,13 +111,15 @@ El proceso P5 esta bloqueado
 Proceso P3 entro en ejecucion
 --------------------
 TIEMPO 30
-El proceso P5 pasó de bloqueado a listo
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 31
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 32
+El proceso P5 pasó de bloqueado a listo
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 33
@@ -155,13 +159,15 @@ El proceso P5 esta bloqueado
 Proceso P2 entro en ejecucion
 --------------------
 TIEMPO 44
-El proceso P5 pasó de bloqueado a listo
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P2
 --------------------
 TIEMPO 45
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P2
 --------------------
 TIEMPO 46
+El proceso P5 pasó de bloqueado a listo
 Se ejecuta el proceso P2
 --------------------
 TIEMPO 47
@@ -207,13 +213,15 @@ El proceso P5 esta bloqueado
 Proceso P1 entro en ejecucion
 --------------------
 TIEMPO 60
-El proceso P5 pasó de bloqueado a listo
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P1
 --------------------
 TIEMPO 61
+El proceso P5 esta bloqueado
 Se ejecuta el proceso P1
 --------------------
 TIEMPO 62
+El proceso P5 pasó de bloqueado a listo
 Se ejecuta el proceso P1
 --------------------
 TIEMPO 63
