@@ -174,7 +174,7 @@ class RoundRobin:
                 
                 if self.ejecTcp:
                     self.ejecutarTcp(archivo)
-                elif self.procesoEjecutando:
+                if self.procesoEjecutando:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga() and not self.ejecTip:
                         self.log(f"Se ejecuta el proceso {self.procesoEjecutando.getNombre()}", archivo)
                         self.procesoEjecutando.tiempoRafaga += 1

@@ -18,7 +18,7 @@ class PrioridadExterna:
         self.tcp = 0
         self.ejecTcp = False
         self.conTcp = 0
-        self.contTfp = 0
+        self.conTfp = 0
         self.cpuOciosa = 0
         self.cpuSO = 0
         self.cpuProcesos = 0
@@ -114,17 +114,9 @@ class PrioridadExterna:
             self.log(f"Ejecutando TCP ({self.conTcp + 1}/{self.tcp})", archivo)
             self.conTcp += 1
             self.cpuSO += 1
-            if self.conTcp == self.tcp:
-                self.ejecTcp = False
-                self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.prioridadExterna, reverse=True)
-                    self.listoAEjecutar(archivo)
-            else:
-                self.log("No hay más procesos listos para ejecutar.", archivo)
         else:
             self.ejecTcp = False
-            self.conTcp = 0
+            self.contTcp = 0
             if not self.listaProcesosListos.esta_vacia():
                 self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.prioridadExterna, reverse=True)
                 self.listoAEjecutar(archivo)
@@ -137,13 +129,18 @@ class PrioridadExterna:
             if self.procesoEjecutando.pcb.cantRafagasRestante <= 0:
                 self.finalizarProceso(archivo)
             else:
-                self.bloquearProceso(archivo)
+                # Verificar si hay que ejecutar TCP
+                if self.ejecTcp:
+                    self.ejecutarTcp(archivo)
+                else:
+                    self.bloquearProceso(archivo)
+
     
     def finalizarProceso(self, archivo):
-        if self.contTfp < self.tfp:
-            self.contTfp += 1
+        if self.conTfp < self.tfp:
+            self.conTfp += 1
             self.cpuSO += 1
-            self.log(f"Ejecutando TFP ({self.contTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
+            self.log(f"Ejecutando TFP ({self.conTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
         else:
             tiempoFinalizacion = self.tiempo
             tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
@@ -152,15 +149,20 @@ class PrioridadExterna:
             self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
             self.log(f"Proceso {self.procesoEjecutando.getNombre()} Finalizó", archivo)
             self.procesoEjecutando = None
-            self.contTfp = 0
-            self.ejecTcp = True
+            self.conTfp = 0
+            self.listoAEjecutar(archivo)
     
     def bloquearProceso(self, archivo):
-        self.log(f"Proceso {self.procesoEjecutando.getNombre()} entró en bloqueo", archivo)
-        self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-        self.procesoEjecutando.tiempoBloqueado = 0
-        self.procesoEjecutando = None
-        self.ejecTcp = True
+        if self.conTcp < self.tcp:
+            self.conTcp += 1
+            self.cpuSO += 1
+            self.log(f"Ejecutando TCP para Bloquear el proceso {self.procesoEjecutando.getNombre()}", archivo)
+        else:
+            self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
+            self.log(f"Proceso {self.procesoEjecutando.getNombre()} bloqueado", archivo)
+            self.procesoEjecutando = None
+            self.conTcp = 0
+            self.listoAEjecutar(archivo)
     
     def Iniciar(self):
         self.SolicitarDatos()
@@ -186,6 +188,8 @@ class PrioridadExterna:
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
+                        if not self.ejecTcp:
+                            self.listoAEjecutar(archivo)
                 else:
                     self.listoAEjecutar(archivo)
                     if self.procesoEjecutando is None:

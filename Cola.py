@@ -7,6 +7,9 @@ class Cola:
 
     def encolar(self, item):
         self.items.append(item)
+        
+    def encolar_adelante(self, item):
+        self.items.insert(0, item)    
 
     def desencolar(self):
         if not self.esta_vacia():

@@ -1,3 +1,0 @@
-Cambiar inicio
-sacas de las funciones, LISTOAEJECUTAR y colocarlas en inicio
-y verificar el so si esta en uso

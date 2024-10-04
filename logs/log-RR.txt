@@ -16,95 +16,101 @@ Proceso P2 Entra a Listo
 Se ejecuta el proceso P1
 --------------------
 TIEMPO 4
-Se ejecuta el proceso P1
+Proceso P1 es interrumpido
+Proceso P3 ejecuta tip
 --------------------
 TIEMPO 5
+Proceso P3 Entra a Listo
 Se ejecuta el proceso P1
 --------------------
 TIEMPO 6
 Proceso P1 es interrumpido
-Proceso P3 ejecuta tip
+Proceso P4 ejecuta tip
 --------------------
 TIEMPO 7
-Proceso P3 Entra a Listo
+Proceso P4 Entra a Listo
 Se ejecuta el proceso P1
-Proceso P1 entró en bloqueo
 --------------------
 TIEMPO 8
-Proceso P4 ejecuta tip
-El proceso P1 está bloqueado
-Ejecutando TCP (1/1)
+Proceso P1 es interrumpido
+Proceso P5 ejecuta tip
 --------------------
 TIEMPO 9
-Proceso P4 Entra a Listo
-El proceso P1 está bloqueado
-Proceso P2 entró en ejecución
+Proceso P5 Entra a Listo
+Se ejecuta el proceso P1
 --------------------
 TIEMPO 10
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
+Proceso P1 es interrumpido
+Proceso P6 ejecuta tip
 --------------------
 TIEMPO 11
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
+Proceso P6 Entra a Listo
+Se ejecuta el proceso P1
+Quantum del proceso P1 ha expirado
+Proceso P1 es interrumpido
 --------------------
 TIEMPO 12
-Proceso P2 es interrumpido
-Proceso P5 ejecuta tip
-El proceso P1 está bloqueado
+Proceso P7 ejecuta tip
+Ejecutando TCP (1/1)
+Proceso P2 entró en ejecución
 --------------------
 TIEMPO 13
-Proceso P5 Entra a Listo
-El proceso P1 pasó de bloqueado a listo
+Proceso P7 Entra a Listo
 Se ejecuta el proceso P2
 --------------------
 TIEMPO 14
-Se ejecuta el proceso P2
+Proceso P2 es interrumpido
+Proceso P8 ejecuta tip
 --------------------
 TIEMPO 15
+Proceso P8 Entra a Listo
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 16
+Proceso P2 es interrumpido
+Proceso P9 ejecuta tip
+--------------------
+TIEMPO 17
+Proceso P9 Entra a Listo
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 18
+Proceso P2 es interrumpido
+Proceso P10 ejecuta tip
+--------------------
+TIEMPO 19
+Proceso P10 Entra a Listo
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 20
 Se ejecuta el proceso P2
 Quantum del proceso P2 ha expirado
 Proceso P2 es interrumpido
 --------------------
-TIEMPO 16
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 17
-Proceso P3 entró en ejecución
---------------------
-TIEMPO 18
-Se ejecuta el proceso P3
---------------------
-TIEMPO 19
-Se ejecuta el proceso P3
---------------------
-TIEMPO 20
-Proceso P3 es interrumpido
-Proceso P6 ejecuta tip
---------------------
 TIEMPO 21
-Proceso P6 Entra a Listo
-Se ejecuta el proceso P3
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
 --------------------
 TIEMPO 22
 Se ejecuta el proceso P3
 --------------------
 TIEMPO 23
 Se ejecuta el proceso P3
+--------------------
+TIEMPO 24
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 25
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 26
+Se ejecuta el proceso P3
 Quantum del proceso P3 ha expirado
 Proceso P3 es interrumpido
 --------------------
-TIEMPO 24
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 25
-Proceso P4 entró en ejecución
---------------------
-TIEMPO 26
-Se ejecuta el proceso P4
---------------------
 TIEMPO 27
-Se ejecuta el proceso P4
+Ejecutando TCP (1/1)
+Proceso P4 entró en ejecución
 --------------------
 TIEMPO 28
 Se ejecuta el proceso P4
@@ -114,17 +120,18 @@ Se ejecuta el proceso P4
 --------------------
 TIEMPO 30
 Se ejecuta el proceso P4
+--------------------
+TIEMPO 31
+Se ejecuta el proceso P4
+--------------------
+TIEMPO 32
+Se ejecuta el proceso P4
 Quantum del proceso P4 ha expirado
 Proceso P4 es interrumpido
 --------------------
-TIEMPO 31
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 32
-Proceso P5 entró en ejecución
---------------------
 TIEMPO 33
-Se ejecuta el proceso P5
+Ejecutando TCP (1/1)
+Proceso P5 entró en ejecución
 --------------------
 TIEMPO 34
 Se ejecuta el proceso P5
@@ -134,397 +141,971 @@ Se ejecuta el proceso P5
 --------------------
 TIEMPO 36
 Se ejecuta el proceso P5
-Proceso P5 entró en bloqueo
 --------------------
 TIEMPO 37
-El proceso P5 está bloqueado
-Ejecutando TCP (1/1)
+Se ejecuta el proceso P5
+Proceso P5 entró en bloqueo
 --------------------
 TIEMPO 38
 El proceso P5 está bloqueado
-Proceso P1 entró en ejecución
+Ejecutando TCP (1/1)
+Proceso P6 entró en ejecución
 --------------------
 TIEMPO 39
 El proceso P5 está bloqueado
-Se ejecuta el proceso P1
+Se ejecuta el proceso P6
 --------------------
 TIEMPO 40
-El proceso P5 está bloqueado
-Se ejecuta el proceso P1
+El proceso P5 pasó de bloqueado a listo
+Se ejecuta el proceso P6
 --------------------
 TIEMPO 41
-El proceso P5 pasó de bloqueado a listo
-Se ejecuta el proceso P1
+Se ejecuta el proceso P6
 --------------------
 TIEMPO 42
-Se ejecuta el proceso P1
-Proceso P1 entró en bloqueo
+Se ejecuta el proceso P6
 --------------------
 TIEMPO 43
-El proceso P1 está bloqueado
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 44
-El proceso P1 está bloqueado
-Proceso P2 entró en ejecución
---------------------
-TIEMPO 45
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
---------------------
-TIEMPO 46
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
---------------------
-TIEMPO 47
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
-Proceso P2 entró en bloqueo
---------------------
-TIEMPO 48
-El proceso P2 está bloqueado
-El proceso P1 pasó de bloqueado a listo
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 49
-El proceso P2 está bloqueado
-Proceso P6 entró en ejecución
---------------------
-TIEMPO 50
-El proceso P2 está bloqueado
-Se ejecuta el proceso P6
---------------------
-TIEMPO 51
-El proceso P2 está bloqueado
-Se ejecuta el proceso P6
---------------------
-TIEMPO 52
-El proceso P2 pasó de bloqueado a listo
-Se ejecuta el proceso P6
---------------------
-TIEMPO 53
-Se ejecuta el proceso P6
---------------------
-TIEMPO 54
 Se ejecuta el proceso P6
 Quantum del proceso P6 ha expirado
 Proceso P6 es interrumpido
 --------------------
-TIEMPO 55
+TIEMPO 44
 Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 45
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 46
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 47
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 48
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 49
+Se ejecuta el proceso P1
+Quantum del proceso P1 ha expirado
+Proceso P1 es interrumpido
+--------------------
+TIEMPO 50
+Ejecutando TCP (1/1)
+Proceso P7 entró en ejecución
+--------------------
+TIEMPO 51
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 52
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 53
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 54
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 55
+Se ejecuta el proceso P7
+Quantum del proceso P7 ha expirado
+Proceso P7 es interrumpido
 --------------------
 TIEMPO 56
-Proceso P3 entró en ejecución
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
 --------------------
 TIEMPO 57
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 58
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 59
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 60
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 61
+Se ejecuta el proceso P8
+Quantum del proceso P8 ha expirado
+Proceso P8 es interrumpido
+--------------------
+TIEMPO 62
+Ejecutando TCP (1/1)
+Proceso P9 entró en ejecución
+--------------------
+TIEMPO 63
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 64
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 65
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 66
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 67
+Se ejecuta el proceso P9
+Quantum del proceso P9 ha expirado
+Proceso P9 es interrumpido
+--------------------
+TIEMPO 68
+Ejecutando TCP (1/1)
+Proceso P10 entró en ejecución
+--------------------
+TIEMPO 69
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 70
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 71
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 72
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 73
+Se ejecuta el proceso P10
+Quantum del proceso P10 ha expirado
+Proceso P10 es interrumpido
+--------------------
+TIEMPO 74
+Ejecutando TCP (1/1)
+Proceso P2 entró en ejecución
+--------------------
+TIEMPO 75
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 76
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 77
+Se ejecuta el proceso P2
+Proceso P2 entró en bloqueo
+--------------------
+TIEMPO 78
+El proceso P2 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 79
+El proceso P2 está bloqueado
 Se ejecuta el proceso P3
 Proceso P3 entró en bloqueo
 --------------------
-TIEMPO 58
+TIEMPO 80
+El proceso P2 está bloqueado
 El proceso P3 está bloqueado
 Ejecutando TCP (1/1)
---------------------
-TIEMPO 59
-El proceso P3 está bloqueado
 Proceso P4 entró en ejecución
 --------------------
-TIEMPO 60
+TIEMPO 81
+El proceso P2 está bloqueado
 El proceso P3 está bloqueado
 Se ejecuta el proceso P4
 --------------------
-TIEMPO 61
+TIEMPO 82
+El proceso P3 está bloqueado
+El proceso P2 pasó de bloqueado a listo
+Se ejecuta el proceso P4
+--------------------
+TIEMPO 83
 El proceso P3 pasó de bloqueado a listo
 Se ejecuta el proceso P4
-Ejecutando TFP (1/1) para finalizar el proceso P4
 --------------------
-TIEMPO 62
-Proceso P4 Finalizó
+TIEMPO 84
+Se ejecuta el proceso P4
 --------------------
-TIEMPO 63
+TIEMPO 85
+Se ejecuta el proceso P4
+Quantum del proceso P4 ha expirado
+Proceso P4 es interrumpido
+--------------------
+TIEMPO 86
 Ejecutando TCP (1/1)
---------------------
-TIEMPO 64
 Proceso P5 entró en ejecución
 --------------------
-TIEMPO 65
+TIEMPO 87
 Se ejecuta el proceso P5
 --------------------
-TIEMPO 66
+TIEMPO 88
 Se ejecuta el proceso P5
 --------------------
-TIEMPO 67
+TIEMPO 89
 Se ejecuta el proceso P5
 --------------------
-TIEMPO 68
+TIEMPO 90
 Se ejecuta el proceso P5
 Proceso P5 entró en bloqueo
 --------------------
-TIEMPO 69
+TIEMPO 91
 El proceso P5 está bloqueado
 Ejecutando TCP (1/1)
+Proceso P6 entró en ejecución
 --------------------
-TIEMPO 70
+TIEMPO 92
 El proceso P5 está bloqueado
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 93
+El proceso P5 pasó de bloqueado a listo
+Se ejecuta el proceso P6
+Proceso P6 entró en bloqueo
+--------------------
+TIEMPO 94
+El proceso P6 está bloqueado
+Ejecutando TCP (1/1)
 Proceso P1 entró en ejecución
 --------------------
-TIEMPO 71
-El proceso P5 está bloqueado
-Se ejecuta el proceso P1
+TIEMPO 95
+El proceso P6 está bloqueado
+Proceso P1 entró en bloqueo
 --------------------
-TIEMPO 72
-El proceso P5 está bloqueado
-Se ejecuta el proceso P1
---------------------
-TIEMPO 73
-El proceso P5 pasó de bloqueado a listo
-Se ejecuta el proceso P1
---------------------
-TIEMPO 74
-Se ejecuta el proceso P1
-Ejecutando TFP (1/1) para finalizar el proceso P1
---------------------
-TIEMPO 75
-Proceso P1 Finalizó
---------------------
-TIEMPO 76
+TIEMPO 96
+El proceso P6 está bloqueado
+El proceso P1 está bloqueado
 Ejecutando TCP (1/1)
+Proceso P7 entró en ejecución
 --------------------
-TIEMPO 77
+TIEMPO 97
+El proceso P6 está bloqueado
+El proceso P1 está bloqueado
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 98
+El proceso P1 está bloqueado
+El proceso P6 pasó de bloqueado a listo
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 99
+El proceso P1 está bloqueado
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 100
+El proceso P1 está bloqueado
+Se ejecuta el proceso P7
+Proceso P7 entró en bloqueo
+--------------------
+TIEMPO 101
+El proceso P7 está bloqueado
+El proceso P1 pasó de bloqueado a listo
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 102
+El proceso P7 está bloqueado
+Proceso P8 entró en bloqueo
+--------------------
+TIEMPO 103
+El proceso P7 está bloqueado
+El proceso P8 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P9 entró en ejecución
+--------------------
+TIEMPO 104
+El proceso P7 está bloqueado
+El proceso P8 está bloqueado
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 105
+El proceso P7 está bloqueado
+El proceso P8 está bloqueado
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 106
+El proceso P7 pasó de bloqueado a listo
+El proceso P8 pasó de bloqueado a listo
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 107
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 108
+Se ejecuta el proceso P9
+Quantum del proceso P9 ha expirado
+Proceso P9 es interrumpido
+--------------------
+TIEMPO 109
+Ejecutando TCP (1/1)
+Proceso P10 entró en ejecución
+--------------------
+TIEMPO 110
+Se ejecuta el proceso P10
+Proceso P10 entró en bloqueo
+--------------------
+TIEMPO 111
+El proceso P10 está bloqueado
+Ejecutando TCP (1/1)
 Proceso P2 entró en ejecución
 --------------------
-TIEMPO 78
+TIEMPO 112
+El proceso P10 está bloqueado
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 79
+TIEMPO 113
+El proceso P10 está bloqueado
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 80
+TIEMPO 114
+El proceso P10 pasó de bloqueado a listo
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 81
+TIEMPO 115
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 82
+TIEMPO 116
 Se ejecuta el proceso P2
 Quantum del proceso P2 ha expirado
 Proceso P2 es interrumpido
 --------------------
-TIEMPO 83
+TIEMPO 117
 Ejecutando TCP (1/1)
---------------------
-TIEMPO 84
-Proceso P6 entró en ejecución
---------------------
-TIEMPO 85
-Se ejecuta el proceso P6
---------------------
-TIEMPO 86
-Se ejecuta el proceso P6
-Proceso P6 entró en bloqueo
---------------------
-TIEMPO 87
-El proceso P6 está bloqueado
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 88
-El proceso P6 está bloqueado
 Proceso P3 entró en ejecución
 --------------------
-TIEMPO 89
-El proceso P6 está bloqueado
+TIEMPO 118
 Se ejecuta el proceso P3
 --------------------
-TIEMPO 90
-El proceso P6 está bloqueado
+TIEMPO 119
 Se ejecuta el proceso P3
 --------------------
-TIEMPO 91
-El proceso P6 pasó de bloqueado a listo
+TIEMPO 120
 Se ejecuta el proceso P3
 --------------------
-TIEMPO 92
+TIEMPO 121
 Se ejecuta el proceso P3
 --------------------
-TIEMPO 93
+TIEMPO 122
 Se ejecuta el proceso P3
 Quantum del proceso P3 ha expirado
 Proceso P3 es interrumpido
 --------------------
-TIEMPO 94
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 95
-Proceso P5 entró en ejecución
---------------------
-TIEMPO 96
-Se ejecuta el proceso P5
---------------------
-TIEMPO 97
-Se ejecuta el proceso P5
---------------------
-TIEMPO 98
-Se ejecuta el proceso P5
---------------------
-TIEMPO 99
-Se ejecuta el proceso P5
-Ejecutando TFP (1/1) para finalizar el proceso P5
---------------------
-TIEMPO 100
-Proceso P5 Finalizó
---------------------
-TIEMPO 101
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 102
-Proceso P2 entró en ejecución
---------------------
-TIEMPO 103
-Se ejecuta el proceso P2
---------------------
-TIEMPO 104
-Se ejecuta el proceso P2
---------------------
-TIEMPO 105
-Se ejecuta el proceso P2
-Ejecutando TFP (1/1) para finalizar el proceso P2
---------------------
-TIEMPO 106
-Proceso P2 Finalizó
---------------------
-TIEMPO 107
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 108
-Proceso P6 entró en ejecución
---------------------
-TIEMPO 109
-Se ejecuta el proceso P6
---------------------
-TIEMPO 110
-Se ejecuta el proceso P6
---------------------
-TIEMPO 111
-Se ejecuta el proceso P6
---------------------
-TIEMPO 112
-Se ejecuta el proceso P6
---------------------
-TIEMPO 113
-Se ejecuta el proceso P6
-Quantum del proceso P6 ha expirado
-Proceso P6 es interrumpido
---------------------
-TIEMPO 114
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 115
-Proceso P3 entró en ejecución
---------------------
-TIEMPO 116
-Se ejecuta el proceso P3
-Ejecutando TFP (1/1) para finalizar el proceso P3
---------------------
-TIEMPO 117
-Proceso P3 Finalizó
---------------------
-TIEMPO 118
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 119
-Proceso P6 entró en ejecución
---------------------
-TIEMPO 120
-Se ejecuta el proceso P6
---------------------
-TIEMPO 121
-Se ejecuta el proceso P6
-Proceso P6 entró en bloqueo
---------------------
-TIEMPO 122
-El proceso P6 está bloqueado
-Ejecutando TCP (1/1)
---------------------
 TIEMPO 123
-El proceso P6 está bloqueado
-No hay procesos listos
-CPU ociosa
+Ejecutando TCP (1/1)
+Proceso P4 entró en ejecución
 --------------------
 TIEMPO 124
-El proceso P6 está bloqueado
-No hay procesos listos
-CPU ociosa
+Se ejecuta el proceso P4
 --------------------
 TIEMPO 125
-El proceso P6 está bloqueado
-No hay procesos listos
-CPU ociosa
+Se ejecuta el proceso P4
+Ejecutando TFP (1/1) para finalizar el proceso P4
 --------------------
 TIEMPO 126
-El proceso P6 pasó de bloqueado a listo
-CPU ociosa
+Proceso P4 Finalizó
 --------------------
 TIEMPO 127
-Proceso P6 entró en ejecución
+Ejecutando TCP (1/1)
+Proceso P5 entró en ejecución
 --------------------
 TIEMPO 128
-Se ejecuta el proceso P6
+Se ejecuta el proceso P5
 --------------------
 TIEMPO 129
-Se ejecuta el proceso P6
+Se ejecuta el proceso P5
 --------------------
 TIEMPO 130
-Se ejecuta el proceso P6
+Se ejecuta el proceso P5
 --------------------
 TIEMPO 131
-Se ejecuta el proceso P6
+Se ejecuta el proceso P5
+Proceso P5 entró en bloqueo
 --------------------
 TIEMPO 132
-Se ejecuta el proceso P6
-Quantum del proceso P6 ha expirado
-Proceso P6 es interrumpido
+El proceso P5 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P6 entró en ejecución
 --------------------
 TIEMPO 133
-Ejecutando TCP (1/1)
+El proceso P5 está bloqueado
+Se ejecuta el proceso P6
 --------------------
 TIEMPO 134
-Proceso P6 entró en ejecución
+El proceso P5 pasó de bloqueado a listo
+Se ejecuta el proceso P6
 --------------------
 TIEMPO 135
 Se ejecuta el proceso P6
 --------------------
 TIEMPO 136
 Se ejecuta el proceso P6
-Ejecutando TFP (1/1) para finalizar el proceso P6
 --------------------
 TIEMPO 137
+Se ejecuta el proceso P6
+Quantum del proceso P6 ha expirado
+Proceso P6 es interrumpido
+--------------------
+TIEMPO 138
+Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 139
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 140
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 141
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 142
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 143
+Se ejecuta el proceso P1
+Quantum del proceso P1 ha expirado
+Proceso P1 es interrumpido
+--------------------
+TIEMPO 144
+Ejecutando TCP (1/1)
+Proceso P7 entró en ejecución
+--------------------
+TIEMPO 145
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 146
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 147
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 148
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 149
+Se ejecuta el proceso P7
+Quantum del proceso P7 ha expirado
+Proceso P7 es interrumpido
+--------------------
+TIEMPO 150
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 151
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 152
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 153
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 154
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 155
+Se ejecuta el proceso P8
+Quantum del proceso P8 ha expirado
+Proceso P8 es interrumpido
+--------------------
+TIEMPO 156
+Ejecutando TCP (1/1)
+Proceso P9 entró en ejecución
+--------------------
+TIEMPO 157
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 158
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 159
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 160
+Se ejecuta el proceso P9
+--------------------
+TIEMPO 161
+Se ejecuta el proceso P9
+Quantum del proceso P9 ha expirado
+Proceso P9 es interrumpido
+--------------------
+TIEMPO 162
+Ejecutando TCP (1/1)
+Proceso P10 entró en ejecución
+--------------------
+TIEMPO 163
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 164
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 165
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 166
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 167
+Se ejecuta el proceso P10
+Quantum del proceso P10 ha expirado
+Proceso P10 es interrumpido
+--------------------
+TIEMPO 168
+Ejecutando TCP (1/1)
+Proceso P2 entró en ejecución
+--------------------
+TIEMPO 169
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 170
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 171
+Se ejecuta el proceso P2
+Ejecutando TFP (1/1) para finalizar el proceso P2
+--------------------
+TIEMPO 172
+Proceso P2 Finalizó
+--------------------
+TIEMPO 173
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 174
+Se ejecuta el proceso P3
+Proceso P3 entró en bloqueo
+--------------------
+TIEMPO 175
+El proceso P3 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P5 entró en ejecución
+--------------------
+TIEMPO 176
+El proceso P3 está bloqueado
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 177
+El proceso P3 está bloqueado
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 178
+El proceso P3 pasó de bloqueado a listo
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 179
+Se ejecuta el proceso P5
+Proceso P5 entró en bloqueo
+--------------------
+TIEMPO 180
+El proceso P5 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P6 entró en ejecución
+--------------------
+TIEMPO 181
+El proceso P5 está bloqueado
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 182
+El proceso P5 pasó de bloqueado a listo
+Se ejecuta el proceso P6
+Proceso P6 entró en bloqueo
+--------------------
+TIEMPO 183
+El proceso P6 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 184
+El proceso P6 está bloqueado
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 185
+El proceso P6 está bloqueado
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 186
+El proceso P6 está bloqueado
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 187
+El proceso P6 pasó de bloqueado a listo
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 188
+Se ejecuta el proceso P1
+Quantum del proceso P1 ha expirado
+Proceso P1 es interrumpido
+--------------------
+TIEMPO 189
+Ejecutando TCP (1/1)
+Proceso P7 entró en ejecución
+--------------------
+TIEMPO 190
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 191
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 192
+Se ejecuta el proceso P7
+--------------------
+TIEMPO 193
+Se ejecuta el proceso P7
+Ejecutando TFP (1/1) para finalizar el proceso P7
+--------------------
+TIEMPO 194
+Proceso P7 Finalizó
+--------------------
+TIEMPO 195
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 196
+Proceso P8 entró en bloqueo
+--------------------
+TIEMPO 197
+El proceso P8 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P9 entró en ejecución
+--------------------
+TIEMPO 198
+El proceso P8 está bloqueado
+Ejecutando TFP (1/1) para finalizar el proceso P9
+--------------------
+TIEMPO 199
+El proceso P8 está bloqueado
+Proceso P9 Finalizó
+--------------------
+TIEMPO 200
+El proceso P8 pasó de bloqueado a listo
+Ejecutando TCP (1/1)
+Proceso P10 entró en ejecución
+--------------------
+TIEMPO 201
+Se ejecuta el proceso P10
+Proceso P10 entró en bloqueo
+--------------------
+TIEMPO 202
+El proceso P10 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 203
+El proceso P10 está bloqueado
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 204
+El proceso P10 está bloqueado
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 205
+El proceso P10 pasó de bloqueado a listo
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 206
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 207
+Se ejecuta el proceso P3
+Quantum del proceso P3 ha expirado
+Proceso P3 es interrumpido
+--------------------
+TIEMPO 208
+Ejecutando TCP (1/1)
+Proceso P5 entró en ejecución
+--------------------
+TIEMPO 209
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 210
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 211
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 212
+Se ejecuta el proceso P5
+Ejecutando TFP (1/1) para finalizar el proceso P5
+--------------------
+TIEMPO 213
+Proceso P5 Finalizó
+--------------------
+TIEMPO 214
+Ejecutando TCP (1/1)
+Proceso P6 entró en ejecución
+--------------------
+TIEMPO 215
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 216
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 217
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 218
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 219
+Se ejecuta el proceso P6
+Quantum del proceso P6 ha expirado
+Proceso P6 es interrumpido
+--------------------
+TIEMPO 220
+Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 221
+Proceso P1 entró en bloqueo
+--------------------
+TIEMPO 222
+El proceso P1 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 223
+El proceso P1 está bloqueado
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 224
+El proceso P1 está bloqueado
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 225
+El proceso P1 está bloqueado
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 226
+El proceso P1 está bloqueado
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 227
+El proceso P1 pasó de bloqueado a listo
+Se ejecuta el proceso P8
+Quantum del proceso P8 ha expirado
+Proceso P8 es interrumpido
+--------------------
+TIEMPO 228
+Ejecutando TCP (1/1)
+Proceso P10 entró en ejecución
+--------------------
+TIEMPO 229
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 230
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 231
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 232
+Se ejecuta el proceso P10
+--------------------
+TIEMPO 233
+Se ejecuta el proceso P10
+Quantum del proceso P10 ha expirado
+Proceso P10 es interrumpido
+--------------------
+TIEMPO 234
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 235
+Se ejecuta el proceso P3
+Proceso P3 entró en bloqueo
+--------------------
+TIEMPO 236
+El proceso P3 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P6 entró en ejecución
+--------------------
+TIEMPO 237
+El proceso P3 está bloqueado
+Se ejecuta el proceso P6
+--------------------
+TIEMPO 238
+El proceso P3 está bloqueado
+Se ejecuta el proceso P6
+Ejecutando TFP (1/1) para finalizar el proceso P6
+--------------------
+TIEMPO 239
+El proceso P3 pasó de bloqueado a listo
 Proceso P6 Finalizó
+--------------------
+TIEMPO 240
+Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 241
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 242
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 243
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 244
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 245
+Se ejecuta el proceso P1
+Quantum del proceso P1 ha expirado
+Proceso P1 es interrumpido
+--------------------
+TIEMPO 246
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 247
+Proceso P8 entró en bloqueo
+--------------------
+TIEMPO 248
+El proceso P8 está bloqueado
+Ejecutando TCP (1/1)
+Proceso P10 entró en ejecución
+--------------------
+TIEMPO 249
+El proceso P8 está bloqueado
+Se ejecuta el proceso P10
+Ejecutando TFP (1/1) para finalizar el proceso P10
+--------------------
+TIEMPO 250
+El proceso P8 está bloqueado
+Proceso P10 Finalizó
+--------------------
+TIEMPO 251
+El proceso P8 pasó de bloqueado a listo
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 252
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 253
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 254
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 255
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 256
+Se ejecuta el proceso P3
+Quantum del proceso P3 ha expirado
+Proceso P3 es interrumpido
+--------------------
+TIEMPO 257
+Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 258
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 259
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 260
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 261
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 262
+Se ejecuta el proceso P1
+Quantum del proceso P1 ha expirado
+Proceso P1 es interrumpido
+--------------------
+TIEMPO 263
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 264
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 265
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 266
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 267
+Se ejecuta el proceso P8
+--------------------
+TIEMPO 268
+Se ejecuta el proceso P8
+Quantum del proceso P8 ha expirado
+Proceso P8 es interrumpido
+--------------------
+TIEMPO 269
+Ejecutando TCP (1/1)
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 270
+Se ejecuta el proceso P3
+Ejecutando TFP (1/1) para finalizar el proceso P3
+--------------------
+TIEMPO 271
+Proceso P3 Finalizó
+--------------------
+TIEMPO 272
+Ejecutando TCP (1/1)
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 273
+Ejecutando TFP (1/1) para finalizar el proceso P1
+--------------------
+TIEMPO 274
+Proceso P1 Finalizó
+--------------------
+TIEMPO 275
+Ejecutando TCP (1/1)
+Proceso P8 entró en ejecución
+--------------------
+TIEMPO 276
+Ejecutando TFP (1/1) para finalizar el proceso P8
+--------------------
+TIEMPO 277
+Proceso P8 Finalizó
 --------------------------
 DATOS SOLICITADOS
 Proceso P4:
-Tiempo de retorno: 54
-Tiempo de retorno normalizado: 7.714285714285714
---------------------------
-Proceso P1:
-Tiempo de retorno: 75
-Tiempo de retorno normalizado: 6.25
---------------------------
-Proceso P5:
-Tiempo de retorno: 88
-Tiempo de retorno normalizado: 7.333333333333333
+Tiempo de retorno: 120
+Tiempo de retorno normalizado: 10.0
 --------------------------
 Proceso P2:
-Tiempo de retorno: 104
-Tiempo de retorno normalizado: 6.5
+Tiempo de retorno: 170
+Tiempo de retorno normalizado: 10.625
 --------------------------
-Proceso P3:
-Tiempo de retorno: 111
-Tiempo de retorno normalizado: 9.25
+Proceso P7:
+Tiempo de retorno: 182
+Tiempo de retorno normalizado: 10.11111111111111
+--------------------------
+Proceso P9:
+Tiempo de retorno: 183
+Tiempo de retorno normalizado: 12.2
+--------------------------
+Proceso P5:
+Tiempo de retorno: 205
+Tiempo de retorno normalizado: 10.25
 --------------------------
 Proceso P6:
-Tiempo de retorno: 117
-Tiempo de retorno normalizado: 5.571428571428571
+Tiempo de retorno: 229
+Tiempo de retorno normalizado: 10.904761904761905
 --------------------------
-Tiempo medio de retorno: 91.5
-CPU utilizada por procesos: 80 (57.97%)
-CPU utilizada por SO: 54 (39.13%)
-CPU ociosa: 4 (2.90%)
+Proceso P10:
+Tiempo de retorno: 232
+Tiempo de retorno normalizado: 12.88888888888889
+--------------------------
+Proceso P3:
+Tiempo de retorno: 267
+Tiempo de retorno normalizado: 11.125
+--------------------------
+Proceso P1:
+Tiempo de retorno: 274
+Tiempo de retorno normalizado: 9.133333333333333
+--------------------------
+Proceso P8:
+Tiempo de retorno: 263
+Tiempo de retorno normalizado: 13.15
+--------------------------
+Tiempo medio de retorno: 212.5
+CPU utilizada por procesos: 194 (69.78%)
+CPU utilizada por SO: 132 (47.48%)
+CPU ociosa: 0 (0.00%)

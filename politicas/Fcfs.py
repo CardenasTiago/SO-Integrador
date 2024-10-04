@@ -89,12 +89,10 @@ class Fcfs:
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
             if self.contTfp == self.tfp:
-                    # Calcular el tiempo de retorno del proceso finalizado
                     tiempoFinalizacion = self.tiempo
                     tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
                     self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
                     
-                    # Agregar tiempo de retorno a la lista
                     self.tiemposRetorno.append(tiempoRetorno)
                     
                     self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
@@ -102,6 +100,8 @@ class Fcfs:
                     self.procesoEjecutando = None
                     self.contTfp = 0
                     self.conTcp = 0
+                    if not self.procesosNuevos.esta_vacia():
+                        self.esperandoAListo(archivo)
             else:
                 self.contTfp += 1
                 self.cpuSO += 1
@@ -128,20 +128,21 @@ class Fcfs:
                 self.log("TIEMPO " + str(self.tiempo), archivo)
                 self.esperandoAListo(archivo)
                 self.bloqueadoAListo(archivo)
-                if self.procesoEjecutando == None:
+                if self.procesoEjecutando == None :
                     if not self.listaProcesosListos.esta_vacia():
                         self.listoAEjecutar(archivo)
                     else:
                         self.log("No hay proceso en ejecucion y no hay procesos listos", archivo)
                         self.cpuOciosa += 1
-                else:
+                elif self.procesoEjecutando != None:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
                         self.log("Se  ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
-                        self.listoAEjecutar(archivo)
+                        if  not self.so:
+                            self.listoAEjecutar(archivo)
                         
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1  
