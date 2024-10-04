@@ -4,6 +4,7 @@ from politicas.Fcfs import Fcfs
 from politicas.Spn import Spn
 from politicas.Srtn import Srtn
 from politicas.PrioridadExterna import PrioridadExterna
+from politicas.RoundRobin import RoundRobin
 datos = "datos.txt"
 
 procesos = Cola()
@@ -33,20 +34,21 @@ while politica == 0:
     print("5-RoundRobin")
     print("0-SALIR")
     try:
-        politica = int(input("INGRESE: "))  # Convertimos a entero
+        politica = int(input("INGRESE: "))
         if politica == 1:
             fcfsPolitica = Fcfs(procesos)
             fcfsPolitica.Iniciar()
-            #fcfsPolitica.prueba()
         elif politica == 2:
             spnPolitica = Spn(procesos)
             spnPolitica.Iniciar()
-            #spnPolitica.prueba()
         elif politica == 3:
             srtPolitica = Srtn(procesos)
             srtPolitica.Iniciar()
         elif politica == 4:
             pePolitica = PrioridadExterna(procesos)
             pePolitica.Iniciar()
+        elif politica == 5:
+            RrPolitica = RoundRobin(procesos)
+            RrPolitica.Iniciar()
     except ValueError:
         print("Por favor, ingrese un número válido.")

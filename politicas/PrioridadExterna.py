@@ -41,17 +41,18 @@ class PrioridadExterna:
             self.listaProcesosListos.encolar(self.procesoEjecutando)
             self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
             self.procesoEjecutando = None
-            self.ejecTcp = True
+            if not self.ejecTip:
+                self.ejecTcp = True
             self.conTcp = 0
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
             if proceso.getTiempoArrivo() == self.tiempo:
+                self.ejecTip = True
                 if self.procesoEjecutando:
                     self.interrupcion(archivo)
                 self.listaProcesos.desencolarProceso(proceso)
                 self.procesosNuevos.encolar(proceso)
-                self.ejecTip = True
                 
         frente = self.procesosNuevos.frente()
         if frente != None:
@@ -64,7 +65,6 @@ class PrioridadExterna:
                 
                 if self.procesoEjecutando:
                     if frente.prioridadExterna > self.procesoEjecutando.prioridadExterna:
-                        # Si el nuevo proceso tiene mayor prioridad, interrumpir el actual y ejecutar TCP
                         self.log(f"Proceso {frente.nombre} tiene mayor prioridad que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
                         self.interrupcion(archivo)
                         self.ejecTcp = True
@@ -94,7 +94,6 @@ class PrioridadExterna:
         for proceso in self.listaProcesosBloqueados.items:
             if proceso.tiempoBloqueado < proceso.entradaSalida:
                 proceso.tiempoBloqueado += 1
-                self.log(f"El proceso {proceso.getNombre()} está bloqueado", archivo)
             else:
                 procesos_a_mover.append(proceso)
         
@@ -190,8 +189,9 @@ class PrioridadExterna:
                 else:
                     self.listoAEjecutar(archivo)
                     if self.procesoEjecutando is None:
-                        self.log("CPU ociosa", archivo)
-                        self.cpuOciosa += 1
+                        if not self.ejecTcp and not self.ejecTip:
+                            self.log("CPU ociosa", archivo)
+                            self.cpuOciosa += 1
                 
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1

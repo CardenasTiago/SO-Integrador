@@ -41,17 +41,18 @@ class Srtn:
             self.listaProcesosListos.encolar(self.procesoEjecutando)
             self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
             self.procesoEjecutando = None
-            self.ejecTcp = True
+            if not self.ejecTip:
+                self.ejecTcp = True
             self.conTcp = 0
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
             if proceso.getTiempoArrivo() == self.tiempo:
+                self.ejecTip = True
                 if self.procesoEjecutando:
                     self.interrupcion(archivo)
                 self.listaProcesos.desencolarProceso(proceso)
                 self.procesosNuevos.encolar(proceso)
-                self.ejecTip = True
                 
         frente = self.procesosNuevos.frente()
         if frente != None:
@@ -63,8 +64,7 @@ class Srtn:
                 self.ejecTip = False
                 
                 if self.procesoEjecutando:
-                    if frente.prioridadExterna > self.procesoEjecutando.prioridadExterna:
-                        # Si el nuevo proceso tiene mayor prioridad, interrumpir el actual y ejecutar TCP
+                    if frente.pcb.duracionRafagaRestante > self.procesoEjecutando.pcb.duracionRafagaRestante:
                         self.log(f"Proceso {frente.nombre} tiene mayor prioridad que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
                         self.interrupcion(archivo)
                         self.ejecTcp = True
@@ -94,7 +94,6 @@ class Srtn:
         for proceso in self.listaProcesosBloqueados.items:
             if proceso.tiempoBloqueado < proceso.entradaSalida:
                 proceso.tiempoBloqueado += 1
-                self.log(f"El proceso {proceso.getNombre()} está bloqueado", archivo)
             else:
                 procesos_a_mover.append(proceso)
         
@@ -106,8 +105,8 @@ class Srtn:
             self.log(f"El proceso {proceso.getNombre()} pasó de bloqueado a listo", archivo)
         
         if procesos_a_mover and self.procesoEjecutando:
-            proceso_mayor_prioridad = max(procesos_a_mover, key=lambda p: p.prioridadExterna)
-            if proceso_mayor_prioridad.prioridadExterna > self.procesoEjecutando.prioridadExterna:
+            proceso_mayor_prioridad = max(procesos_a_mover, key=lambda p: p.pcb.duracionRafagaRestante)
+            if proceso_mayor_prioridad.pcb.duracionRafagaRestante > self.procesoEjecutando.pcb.duracionRafagaRestante:
                 self.interrupcion(archivo)
     
     def ejecutarTcp(self, archivo):
@@ -154,7 +153,6 @@ class Srtn:
             self.log(f"Proceso {self.procesoEjecutando.getNombre()} Finalizó", archivo)
             self.procesoEjecutando = None
             self.contTfp = 0
-            self.ejecTcp = True
     
     def bloquearProceso(self, archivo):
         self.log(f"Proceso {self.procesoEjecutando.getNombre()} entró en bloqueo", archivo)
@@ -165,7 +163,7 @@ class Srtn:
     
     def Iniciar(self):
         self.SolicitarDatos()
-        with open('logs/log-PE.txt', 'w') as archivo:
+        with open('logs/log-Srtn.txt', 'w') as archivo:
             while (not self.listaProcesos.esta_vacia() or 
                    not self.listaProcesosListos.esta_vacia() or 
                    not self.listaProcesosBloqueados.esta_vacia() or 
@@ -190,8 +188,9 @@ class Srtn:
                 else:
                     self.listoAEjecutar(archivo)
                     if self.procesoEjecutando is None:
-                        self.log("CPU ociosa", archivo)
-                        self.cpuOciosa += 1
+                        if not self.ejecTcp and not self.ejecTip:
+                            self.log("CPU ociosa", archivo)
+                            self.cpuOciosa += 1
                 
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1

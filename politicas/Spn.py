@@ -36,43 +36,41 @@ class Spn:
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
-                if proceso.getTiempoArrivo() == self.tiempo:
-                        self.listaProcesos.desencolarProceso(proceso)
-                        self.procesosNuevos.encolar(proceso)
-                        self.log(f"Proceso {proceso.nombre} espera para ejecutar su TIP",archivo)
-                        
-              
-        if self.procesoEjecutando == None:          
-            frente = self.procesosNuevos.frente()
-            if frente != None:
-                if frente.tiempoEsperando == self.tip:
-                    self.log(f"Proceso {frente.nombre} Entra a Listo",archivo)
-                    self.procesosNuevos.desencolarProceso(frente)
-                    self.procesoEjecutando = frente
-                    self.procesoEjecutando.pcb.cantRafagasRestante -= 1
+            if proceso.getTiempoArrivo() == self.tiempo:
+                self.listaProcesos.desencolarProceso(proceso)
+                self.procesosNuevos.encolar(proceso)
+                self.log(f"Proceso {proceso.nombre} espera para ejecutar su TIP", archivo)
                 
+        if self.procesoEjecutando is None:
+            frente = self.procesosNuevos.frente()
+            if frente is not None:
+                if frente.tiempoEsperando == self.tip:
+                    self.log(f"Proceso {frente.nombre} entra a listo", archivo)
+                    self.procesosNuevos.desencolarProceso(frente)
+                    self.listaProcesosListos.encolar(frente)  # Corrección: Encolar el proceso en "procesos listos"
+                    frente.tiempoEsperando = 0  # Reiniciar el tiempo de espera
                     self.so = False
                 else:
                     frente.tiempoEsperando += 1
                     self.cpuSO += 1            
-                    self.log(f"Proceso {frente.nombre} ejecuta tip",archivo)  
+                    self.log(f"Proceso {frente.nombre} ejecuta TIP", archivo)
                     self.so = True
             
     
     
     def listoAEjecutar(self, archivo):
-        frente = self.listaProcesosListos.frente()
-        if self.procesoEjecutando == None:
-            if frente != None:
+        if self.procesoEjecutando is None:
+            frente = self.listaProcesosListos.frente()
+            if frente is not None:
                 if self.conTcp == 0 or self.primerProceso:
+                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
-                    self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
+                    self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecución", archivo)
                     self.procesoEjecutando.pcb.cantRafagasRestante -= 1
                     self.conTcp = 0
                     self.primerProceso = False
             else:
-                if frente == None:
-                    self.log("No hay proceoso listos", archivo)
+                self.log("No hay procesos listos", archivo)
     
     
     def bloqueadoAListo(self, archivo):
@@ -113,7 +111,6 @@ class Spn:
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
-                self.esperandoAListo(archivo)
             else:
                 self.log("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP", archivo)
                 self.conTcp += 1
@@ -122,8 +119,8 @@ class Spn:
             
     def Iniciar(self):
         self.SolicitarDatos()
-        with open('logs/log-fcfs.txt', 'w') as archivo:
-            while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or not self.procesoEjecutando == None):
+        with open('logs/log-Spn.txt', 'w') as archivo:
+            while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia() or not self.procesosNuevos.esta_vacia()) or not self.procesoEjecutando == None):
                 self.log("--------------------",archivo)
                 self.log("TIEMPO " + str(self.tiempo), archivo)
                 self.esperandoAListo(archivo)

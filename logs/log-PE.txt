@@ -2,7 +2,6 @@
 TIEMPO 0
 Proceso P1 ejecuta tip
 No hay procesos listos
-CPU ociosa
 --------------------
 TIEMPO 1
 Proceso P1 Entra a Listo
@@ -11,34 +10,33 @@ Proceso P1 entró en ejecución
 TIEMPO 2
 Proceso P1 es interrumpido
 Proceso P2 ejecuta tip
-Ejecutando TCP (1/1)
 --------------------
 TIEMPO 3
 Proceso P2 Entra a Listo
 Proceso P1 entró en ejecución
 --------------------
 TIEMPO 4
-Se ejecuta el proceso P1
---------------------
-TIEMPO 5
-Se ejecuta el proceso P1
---------------------
-TIEMPO 6
 Proceso P1 es interrumpido
 Proceso P3 ejecuta tip
-Ejecutando TCP (1/1)
 --------------------
-TIEMPO 7
+TIEMPO 5
 Proceso P3 Entra a Listo
 Proceso P3 entró en ejecución
 --------------------
-TIEMPO 8
+TIEMPO 6
 Proceso P3 es interrumpido
 Proceso P4 ejecuta tip
-Ejecutando TCP (1/1)
+--------------------
+TIEMPO 7
+Proceso P4 Entra a Listo
+Proceso P4 entró en ejecución
+--------------------
+TIEMPO 8
+Proceso P4 es interrumpido
+Proceso P5 ejecuta tip
 --------------------
 TIEMPO 9
-Proceso P4 Entra a Listo
+Proceso P5 Entra a Listo
 Proceso P4 entró en ejecución
 --------------------
 TIEMPO 10
@@ -48,347 +46,377 @@ TIEMPO 11
 Se ejecuta el proceso P4
 --------------------
 TIEMPO 12
-Proceso P4 es interrumpido
-Proceso P5 ejecuta tip
-Ejecutando TCP (1/1)
+Se ejecuta el proceso P4
 --------------------
 TIEMPO 13
-Proceso P5 Entra a Listo
-Proceso P4 entró en ejecución
---------------------
-TIEMPO 14
-Se ejecuta el proceso P4
---------------------
-TIEMPO 15
-Se ejecuta el proceso P4
---------------------
-TIEMPO 16
-Se ejecuta el proceso P4
---------------------
-TIEMPO 17
-Se ejecuta el proceso P4
---------------------
-TIEMPO 18
 Se ejecuta el proceso P4
 Ejecutando TFP (1/1) para finalizar el proceso P4
 --------------------
-TIEMPO 19
+TIEMPO 14
 Proceso P4 Finalizó
 --------------------
-TIEMPO 20
+TIEMPO 15
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 21
+TIEMPO 16
 Proceso P3 entró en ejecución
+--------------------
+TIEMPO 17
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 18
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 19
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 20
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 21
+Se ejecuta el proceso P3
 --------------------
 TIEMPO 22
 Se ejecuta el proceso P3
---------------------
-TIEMPO 23
-Se ejecuta el proceso P3
---------------------
-TIEMPO 24
-Se ejecuta el proceso P3
---------------------
-TIEMPO 25
-Se ejecuta el proceso P3
---------------------
-TIEMPO 26
-Se ejecuta el proceso P3
---------------------
-TIEMPO 27
-Se ejecuta el proceso P3
 Proceso P3 entró en bloqueo
 --------------------
-TIEMPO 28
-El proceso P3 está bloqueado
+TIEMPO 23
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 29
-El proceso P3 está bloqueado
+TIEMPO 24
 Proceso P1 entró en ejecución
 --------------------
-TIEMPO 30
-El proceso P3 está bloqueado
+TIEMPO 25
 Se ejecuta el proceso P1
 --------------------
-TIEMPO 31
+TIEMPO 26
 El proceso P3 pasó de bloqueado a listo
 Proceso P1 es interrumpido
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 32
+TIEMPO 27
 Proceso P3 entró en ejecución
+--------------------
+TIEMPO 28
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 29
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 30
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 31
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 32
+Se ejecuta el proceso P3
 --------------------
 TIEMPO 33
 Se ejecuta el proceso P3
+Proceso P3 entró en bloqueo
 --------------------
 TIEMPO 34
-Se ejecuta el proceso P3
+Ejecutando TCP (1/1)
 --------------------
 TIEMPO 35
-Se ejecuta el proceso P3
+Proceso P5 entró en ejecución
 --------------------
 TIEMPO 36
-Se ejecuta el proceso P3
+Se ejecuta el proceso P5
 --------------------
 TIEMPO 37
-Se ejecuta el proceso P3
+El proceso P3 pasó de bloqueado a listo
+Proceso P5 es interrumpido
+Ejecutando TCP (1/1)
 --------------------
 TIEMPO 38
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 39
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 40
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 41
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 42
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 43
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 44
+Se ejecuta el proceso P3
+Proceso P3 entró en bloqueo
+--------------------
+TIEMPO 45
+Ejecutando TCP (1/1)
+--------------------
+TIEMPO 46
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 47
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 48
+El proceso P3 pasó de bloqueado a listo
+Proceso P1 es interrumpido
+Ejecutando TCP (1/1)
+--------------------
+TIEMPO 49
+Proceso P3 entró en ejecución
+--------------------
+TIEMPO 50
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 51
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 52
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 53
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 54
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 55
 Se ejecuta el proceso P3
 Ejecutando TFP (1/1) para finalizar el proceso P3
 --------------------
-TIEMPO 39
+TIEMPO 56
 Proceso P3 Finalizó
 --------------------
-TIEMPO 40
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 41
-Proceso P5 entró en ejecución
---------------------
-TIEMPO 42
-Se ejecuta el proceso P5
---------------------
-TIEMPO 43
-Se ejecuta el proceso P5
---------------------
-TIEMPO 44
-Se ejecuta el proceso P5
---------------------
-TIEMPO 45
-Se ejecuta el proceso P5
-Proceso P5 entró en bloqueo
---------------------
-TIEMPO 46
-El proceso P5 está bloqueado
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 47
-El proceso P5 está bloqueado
-Proceso P1 entró en ejecución
---------------------
-TIEMPO 48
-El proceso P5 está bloqueado
-Se ejecuta el proceso P1
-Proceso P1 entró en bloqueo
---------------------
-TIEMPO 49
-El proceso P5 está bloqueado
-El proceso P1 está bloqueado
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 50
-El proceso P1 está bloqueado
-El proceso P5 pasó de bloqueado a listo
-Proceso P2 entró en ejecución
---------------------
-TIEMPO 51
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
---------------------
-TIEMPO 52
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
---------------------
-TIEMPO 53
-El proceso P1 está bloqueado
-Se ejecuta el proceso P2
---------------------
-TIEMPO 54
-El proceso P1 pasó de bloqueado a listo
-Proceso P2 es interrumpido
-Ejecutando TCP (1/1)
---------------------
-TIEMPO 55
-Proceso P5 entró en ejecución
---------------------
-TIEMPO 56
-Se ejecuta el proceso P5
---------------------
 TIEMPO 57
-Se ejecuta el proceso P5
+Ejecutando TCP (1/1)
 --------------------
 TIEMPO 58
-Se ejecuta el proceso P5
+Proceso P5 entró en ejecución
 --------------------
 TIEMPO 59
 Se ejecuta el proceso P5
-Proceso P5 entró en bloqueo
 --------------------
 TIEMPO 60
-El proceso P5 está bloqueado
-Ejecutando TCP (1/1)
+Se ejecuta el proceso P5
 --------------------
 TIEMPO 61
-El proceso P5 está bloqueado
-Proceso P1 entró en ejecución
+Se ejecuta el proceso P5
+Proceso P5 entró en bloqueo
 --------------------
 TIEMPO 62
-El proceso P5 está bloqueado
-Se ejecuta el proceso P1
+Ejecutando TCP (1/1)
 --------------------
 TIEMPO 63
-El proceso P5 está bloqueado
-Se ejecuta el proceso P1
+Proceso P1 entró en ejecución
 --------------------
 TIEMPO 64
 El proceso P5 pasó de bloqueado a listo
 Se ejecuta el proceso P1
---------------------
-TIEMPO 65
-Se ejecuta el proceso P1
 Proceso P1 entró en bloqueo
 --------------------
-TIEMPO 66
-El proceso P1 está bloqueado
+TIEMPO 65
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 67
-El proceso P1 está bloqueado
+TIEMPO 66
 Proceso P5 entró en ejecución
 --------------------
+TIEMPO 67
+Se ejecuta el proceso P5
+--------------------
 TIEMPO 68
-El proceso P1 está bloqueado
 Se ejecuta el proceso P5
 --------------------
 TIEMPO 69
-El proceso P1 está bloqueado
 Se ejecuta el proceso P5
 --------------------
 TIEMPO 70
-El proceso P1 está bloqueado
-Se ejecuta el proceso P5
---------------------
-TIEMPO 71
 El proceso P1 pasó de bloqueado a listo
 Se ejecuta el proceso P5
-Ejecutando TFP (1/1) para finalizar el proceso P5
+Proceso P5 entró en bloqueo
 --------------------
-TIEMPO 72
-Proceso P5 Finalizó
---------------------
-TIEMPO 73
+TIEMPO 71
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 74
+TIEMPO 72
 Proceso P1 entró en ejecución
+--------------------
+TIEMPO 73
+El proceso P5 pasó de bloqueado a listo
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 74
+Se ejecuta el proceso P1
 --------------------
 TIEMPO 75
 Se ejecuta el proceso P1
+Proceso P1 entró en bloqueo
 --------------------
 TIEMPO 76
-Se ejecuta el proceso P1
+Ejecutando TCP (1/1)
 --------------------
 TIEMPO 77
-Se ejecuta el proceso P1
+Proceso P5 entró en ejecución
 --------------------
 TIEMPO 78
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 79
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 80
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 81
+El proceso P1 pasó de bloqueado a listo
+Se ejecuta el proceso P5
+Proceso P5 entró en bloqueo
+--------------------
+TIEMPO 82
+Ejecutando TCP (1/1)
+--------------------
+TIEMPO 83
+Proceso P1 entró en ejecución
+--------------------
+TIEMPO 84
+El proceso P5 pasó de bloqueado a listo
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 85
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 86
 Se ejecuta el proceso P1
 Ejecutando TFP (1/1) para finalizar el proceso P1
 --------------------
-TIEMPO 79
+TIEMPO 87
 Proceso P1 Finalizó
 --------------------
-TIEMPO 80
+TIEMPO 88
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 81
+TIEMPO 89
+Proceso P5 entró en ejecución
+--------------------
+TIEMPO 90
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 91
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 92
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 93
+Se ejecuta el proceso P5
+Proceso P5 entró en bloqueo
+--------------------
+TIEMPO 94
+Ejecutando TCP (1/1)
+--------------------
+TIEMPO 95
 Proceso P2 entró en ejecución
 --------------------
-TIEMPO 82
+TIEMPO 96
+El proceso P5 pasó de bloqueado a listo
+Proceso P2 es interrumpido
+Ejecutando TCP (1/1)
+--------------------
+TIEMPO 97
+Proceso P5 entró en ejecución
+--------------------
+TIEMPO 98
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 99
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 100
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 101
+Se ejecuta el proceso P5
+Ejecutando TFP (1/1) para finalizar el proceso P5
+--------------------
+TIEMPO 102
+Proceso P5 Finalizó
+--------------------
+TIEMPO 103
+Ejecutando TCP (1/1)
+--------------------
+TIEMPO 104
+Proceso P2 entró en ejecución
+--------------------
+TIEMPO 105
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 83
+TIEMPO 106
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 84
-Se ejecuta el proceso P2
---------------------
-TIEMPO 85
-Se ejecuta el proceso P2
---------------------
-TIEMPO 86
+TIEMPO 107
 Se ejecuta el proceso P2
 Proceso P2 entró en bloqueo
 --------------------
-TIEMPO 87
-El proceso P2 está bloqueado
+TIEMPO 108
 Ejecutando TCP (1/1)
 --------------------
-TIEMPO 88
-El proceso P2 está bloqueado
+TIEMPO 109
 No hay procesos listos
 CPU ociosa
 --------------------
-TIEMPO 89
-El proceso P2 está bloqueado
+TIEMPO 110
 No hay procesos listos
 CPU ociosa
 --------------------
-TIEMPO 90
-El proceso P2 está bloqueado
+TIEMPO 111
 No hay procesos listos
 CPU ociosa
 --------------------
-TIEMPO 91
+TIEMPO 112
 El proceso P2 pasó de bloqueado a listo
 CPU ociosa
 --------------------
-TIEMPO 92
+TIEMPO 113
 Proceso P2 entró en ejecución
 --------------------
-TIEMPO 93
+TIEMPO 114
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 94
+TIEMPO 115
 Se ejecuta el proceso P2
 --------------------
-TIEMPO 95
-Se ejecuta el proceso P2
---------------------
-TIEMPO 96
-Se ejecuta el proceso P2
---------------------
-TIEMPO 97
-Se ejecuta el proceso P2
---------------------
-TIEMPO 98
-Se ejecuta el proceso P2
---------------------
-TIEMPO 99
-Se ejecuta el proceso P2
---------------------
-TIEMPO 100
+TIEMPO 116
 Se ejecuta el proceso P2
 Ejecutando TFP (1/1) para finalizar el proceso P2
 --------------------
-TIEMPO 101
+TIEMPO 117
 Proceso P2 Finalizó
 --------------------------
 DATOS SOLICITADOS
 Proceso P4:
-Tiempo de retorno: 11
-Tiempo de retorno normalizado: 1.5714285714285714
+Tiempo de retorno: 8
+Tiempo de retorno normalizado: 2.0
 --------------------------
 Proceso P3:
-Tiempo de retorno: 33
-Tiempo de retorno normalizado: 2.75
---------------------------
-Proceso P5:
-Tiempo de retorno: 60
-Tiempo de retorno normalizado: 5.0
+Tiempo de retorno: 52
+Tiempo de retorno normalizado: 2.1666666666666665
 --------------------------
 Proceso P1:
-Tiempo de retorno: 79
-Tiempo de retorno normalizado: 6.583333333333333
+Tiempo de retorno: 87
+Tiempo de retorno normalizado: 9.666666666666666
+--------------------------
+Proceso P5:
+Tiempo de retorno: 94
+Tiempo de retorno normalizado: 4.7
 --------------------------
 Proceso P2:
-Tiempo de retorno: 99
-Tiempo de retorno normalizado: 6.1875
+Tiempo de retorno: 115
+Tiempo de retorno normalizado: 19.166666666666668
 --------------------------
-Tiempo medio de retorno: 56.4
-CPU utilizada por procesos: 59 (57.84%)
-CPU utilizada por SO: 42 (41.18%)
-CPU ociosa: 5 (4.90%)
+Tiempo medio de retorno: 71.2
+CPU utilizada por procesos: 63 (53.39%)
+CPU utilizada por SO: 50 (42.37%)
+CPU ociosa: 4 (3.39%)
