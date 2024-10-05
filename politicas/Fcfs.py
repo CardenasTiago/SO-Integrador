@@ -46,6 +46,7 @@ class Fcfs:
             frente = self.procesosNuevos.frente()
             if frente != None:
                 if frente.tiempoEsperando == self.tip:
+                    self.log(f"Proceso {frente.nombre} finaliza su tip",archivo)  
                     self.log(f"Proceso {frente.nombre} Entra a Listo",archivo)
                     self.procesosNuevos.desencolarProceso(frente)
                     self.procesoEjecutando = frente
@@ -100,36 +101,53 @@ class Fcfs:
                     self.procesoEjecutando = None
                     self.contTfp = 0
                     self.conTcp = 0
+                    self.so = False
                     if not self.procesosNuevos.esta_vacia():
                         self.esperandoAListo(archivo)
             else:
                 self.contTfp += 1
                 self.cpuSO += 1
+                self.so = True
                 self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
         else:
-            if self.conTcp == self.tcp:
-                self.log("Proceso " + self.procesoEjecutando.getNombre() + " entró en bloqueo", archivo)
+            if self.procesosNuevos.esta_vacia():
+                if self.conTcp == self.tcp:
+                    self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
+                    self.procesoEjecutando.tiempoBloqueado += 1
+                    self.procesoEjecutando = None
+                    self.conTcp = 0
+                    self.so = False
+                    self.log("Fin de TCP", archivo)
+                    self.listoAEjecutar(archivo)
+                else:
+                    self.log("Se ejecuta el TCP", archivo)
+                    self.conTcp += 1
+                    self.cpuSO += 1
+                    self.so = True
+            else:
                 self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
+                self.so = False
+                self.procesoEjecutando = None
                 self.esperandoAListo(archivo)
-            else:
-                self.log("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP", archivo)
-                self.conTcp += 1
-                self.cpuSO += 1
           
             
     def Iniciar(self):
         self.SolicitarDatos()
-        with open('logs/log-fcfs.txt', 'w') as archivo:
+        with open('logs/log-FCFS.txt', 'w') as archivo:
             while ((not self.listaProcesos.esta_vacia() or not self.listaProcesosListos.esta_vacia() or not self.listaProcesosBloqueados.esta_vacia()) or not self.procesoEjecutando == None):
                 self.log("--------------------",archivo)
                 self.log("TIEMPO " + str(self.tiempo), archivo)
                 self.esperandoAListo(archivo)
                 self.bloqueadoAListo(archivo)
+                if self.so and self.conTcp >= self.tcp:
+                    self.listoABloqueado(archivo)
+                elif self.so and self.contTfp >= self.tfp:
+                    self.listoABloqueado(archivo)
                 if self.procesoEjecutando == None :
-                    if not self.listaProcesosListos.esta_vacia():
+                    if not self.listaProcesosListos.esta_vacia() and not self.so:
                         self.listoAEjecutar(archivo)
                     else:
                         self.log("No hay proceso en ejecucion y no hay procesos listos", archivo)
@@ -140,6 +158,7 @@ class Fcfs:
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
+                        self.log(f"Proceso {self.procesoEjecutando.nombre} entró en bloqueo", archivo)
                         self.listoABloqueado(archivo)
                         if  not self.so:
                             self.listoAEjecutar(archivo)

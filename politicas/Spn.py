@@ -46,6 +46,7 @@ class Spn:
             frente = self.procesosNuevos.frente()
             if frente != None:
                 if frente.tiempoEsperando == self.tip:
+                    self.log(f"Proceso {frente.nombre} finaliza su tip",archivo)  
                     self.log(f"Proceso {frente.nombre} Entra a Listo",archivo)
                     self.procesosNuevos.desencolarProceso(frente)
                     self.procesoEjecutando = frente
@@ -65,6 +66,7 @@ class Spn:
         if self.procesoEjecutando == None:
             if frente != None:
                 if self.conTcp == 0 or self.primerProceso:
+                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga)
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
                     self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
                     self.procesoEjecutando.pcb.cantRafagasRestante -= 1
@@ -100,24 +102,37 @@ class Spn:
                     self.procesoEjecutando = None
                     self.contTfp = 0
                     self.conTcp = 0
+                    self.so = False
                     if not self.procesosNuevos.esta_vacia():
                         self.esperandoAListo(archivo)
             else:
                 self.contTfp += 1
                 self.cpuSO += 1
+                self.so = True
                 self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
         else:
-            if self.conTcp == self.tcp:
-                self.log("Proceso " + self.procesoEjecutando.getNombre() + " entró en bloqueo", archivo)
+            if self.procesosNuevos.esta_vacia():
+                if self.conTcp == self.tcp:
+                    self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
+                    self.procesoEjecutando.tiempoBloqueado += 1
+                    self.procesoEjecutando = None
+                    self.conTcp = 0
+                    self.so = False
+                    self.log("Fin de TCP", archivo)
+                    self.listoAEjecutar(archivo)
+                else:
+                    self.log("Se ejecuta el TCP", archivo)
+                    self.conTcp += 1
+                    self.cpuSO += 1
+                    self.so = True
+            else:
                 self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
                 self.procesoEjecutando.tiempoBloqueado += 1
                 self.procesoEjecutando = None
                 self.conTcp = 0
+                self.so = False
+                self.procesoEjecutando = None
                 self.esperandoAListo(archivo)
-            else:
-                self.log("El proceso " + self.procesoEjecutando.getNombre() + " ejecuta el TCP", archivo)
-                self.conTcp += 1
-                self.cpuSO += 1
           
             
     def Iniciar(self):
@@ -128,9 +143,12 @@ class Spn:
                 self.log("TIEMPO " + str(self.tiempo), archivo)
                 self.esperandoAListo(archivo)
                 self.bloqueadoAListo(archivo)
+                if self.so and self.conTcp >= self.tcp:
+                    self.listoABloqueado(archivo)
+                elif self.so and self.contTfp >= self.tfp:
+                    self.listoABloqueado(archivo)
                 if self.procesoEjecutando == None :
-                    if not self.listaProcesosListos.esta_vacia():
-                        self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
+                    if not self.listaProcesosListos.esta_vacia() and not self.so:
                         self.listoAEjecutar(archivo)
                     else:
                         self.log("No hay proceso en ejecucion y no hay procesos listos", archivo)
@@ -141,9 +159,9 @@ class Spn:
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
+                        self.log(f"Proceso {self.procesoEjecutando.nombre} entró en bloqueo", archivo)
                         self.listoABloqueado(archivo)
                         if  not self.so:
-                            self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga, reverse=False)
                             self.listoAEjecutar(archivo)
                         
                 for proceso in self.listaProcesosListos.items:
