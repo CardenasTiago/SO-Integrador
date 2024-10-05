@@ -14,25 +14,32 @@ class RoundRobin:
         self.tiempo = 0
         self.ejecTip = False
         self.tip = 0
+        self.ejecTfp = False
         self.tfp = 0
         self.tcp = 0
         self.ejecTcp = False
         self.conTcp = 0
-        self.contTfp = 0
+        self.conTfp = 0
         self.cpuOciosa = 0
         self.cpuSO = 0
         self.cpuProcesos = 0
         self.so = False
         self.tiemposRetorno = []
         self.quantum = 0
-        self.tiempoQuantum = 0
+        self.quantumRestante = 0
+        self.procesoPausado = None
     
     def SolicitarDatos(self):
         print("INGRESE SIGUIENTES DATOS")
         self.tip = int(input("Tiempo que utiliza el sistema operativo para aceptar los nuevos procesos (TIP): "))
         self.tfp = int(input("Tiempo que utiliza el sistema operativo para terminar los procesos (TFP): "))
         self.tcp = int(input("Tiempo de conmutación entre procesos (TCP): "))
-        self.quantum = int(input("Quantum para Round Robin: "))
+        while True:
+            self.quantum = int(input("Quantum: "))
+            if self.quantum > max(self.tip, self.tfp, self.tcp):
+                break
+            else:
+                print("El quantum debe ser mayor que TIP, TFP y TCP. Intente nuevamente.")
     
     def log(self, mensaje, archivo):
         print(mensaje)
@@ -40,25 +47,21 @@ class RoundRobin:
     
     def interrupcion(self, archivo):
         if self.procesoEjecutando:
-            if self.tiempoQuantum == self.quantum:
-                self.procesoEjecutando.pcb.duracionRafagaRestante = self.procesoEjecutando.duracionRafaga - self.procesoEjecutando.tiempoRafaga
-                self.listaProcesosListos.encolar(self.procesoEjecutando)
-                self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
-                self.procesoEjecutando = None
-                if not self.ejecTip:
-                    self.ejecTcp = True
-                self.conTcp = 0
-                self.tiempoQuantum = 0
-            else:
-                self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
-                
+            self.procesoEjecutando.pcb.duracionRafagaRestante = self.procesoEjecutando.duracionRafaga - self.procesoEjecutando.tiempoRafaga
+            self.listaProcesosListos.encolar(self.procesoEjecutando)
+            self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
+            self.procesoEjecutando = None
+            self.ejecTcp = True
+            self.conTcp = 0
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
             if proceso.getTiempoArrivo() == self.tiempo:
                 self.ejecTip = True
                 if self.procesoEjecutando:
-                    self.interrupcion(archivo)
+                    self.procesoPausado = self.procesoEjecutando
+                    self.log(f"Proceso {self.procesoPausado.nombre} Pausado", archivo)
+                    self.procesoEjecutando = None
                 self.listaProcesos.desencolarProceso(proceso)
                 self.procesosNuevos.encolar(proceso)
                 
@@ -69,6 +72,9 @@ class RoundRobin:
                 self.procesosNuevos.desencolarProceso(frente)
                 self.listaProcesosListos.encolar(frente)
                 self.ejecTip = False
+                if self.procesoPausado:
+                    self.procesoEjecutando = self.procesoPausado
+                    self.procesoPausado = None
             else:
                 self.ejecTip = True
                 frente.tiempoEsperando += 1
@@ -83,7 +89,7 @@ class RoundRobin:
                 self.log(f"Proceso {self.procesoEjecutando.getNombre()} entró en ejecución", archivo)
                 self.conTcp = 0
                 self.primerProceso = False
-                self.tiempoQuantum = 0
+                self.quantumRestante = self.quantum
             else:
                 self.conTcp += 1
                 self.cpuSO += 1
@@ -95,7 +101,6 @@ class RoundRobin:
         for proceso in self.listaProcesosBloqueados.items:
             if proceso.tiempoBloqueado < proceso.entradaSalida:
                 proceso.tiempoBloqueado += 1
-                self.log(f"El proceso {proceso.getNombre()} está bloqueado", archivo)
             else:
                 procesos_a_mover.append(proceso)
         
@@ -111,16 +116,9 @@ class RoundRobin:
             self.log(f"Ejecutando TCP ({self.conTcp + 1}/{self.tcp})", archivo)
             self.conTcp += 1
             self.cpuSO += 1
-            if self.conTcp == self.tcp:
-                self.ejecTcp = False
-                self.conTcp = 0
-                if not self.listaProcesosListos.esta_vacia():
-                    self.listoAEjecutar(archivo)
-            else:
-                self.log("No hay más procesos listos para ejecutar.", archivo)
         else:
+            self.log(f"Fin de TCP", archivo)
             self.ejecTcp = False
-            self.conTcp = 0
             if not self.listaProcesosListos.esta_vacia():
                 self.listoAEjecutar(archivo)
             else:
@@ -133,38 +131,41 @@ class RoundRobin:
                 self.finalizarProceso(archivo)
             else:
                 self.bloquearProceso(archivo)
+            self.ejecTcp = True
+            self.conTcp = 0
     
     def finalizarProceso(self, archivo):
-        if self.contTfp < self.tfp:
-            self.contTfp += 1
-            self.cpuSO += 1
-            self.log(f"Ejecutando TFP ({self.contTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
+        if self.conTfp < self.tfp:
+            self.log(f"Ejecutando TFP ({self.conTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
+            self.ejecTfp = True
+            self.conTfp += 1
+            self.cpuSO += 1     
         else:
+            self.ejecTfp = False
             tiempoFinalizacion = self.tiempo
             tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
             self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
             self.tiemposRetorno.append(tiempoRetorno)
             self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
-            self.log(f"Proceso {self.procesoEjecutando.getNombre()} Finalizó", archivo)
+            self.log(f"TFP ({self.conTfp}/{self.tfp}) finalizado para el proceso {self.procesoEjecutando.getNombre()}", archivo)
             self.procesoEjecutando = None
-            self.contTfp = 0
-            self.ejecTcp = True
+            self.conTfp = 0
     
     def bloquearProceso(self, archivo):
-        self.log(f"Proceso {self.procesoEjecutando.getNombre()} entró en bloqueo", archivo)
+        self.log(f"Proceso {self.procesoEjecutando.getNombre()} bloqueado", archivo)
         self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-        self.procesoEjecutando.tiempoBloqueado = 0
         self.procesoEjecutando = None
         self.ejecTcp = True
+        self.conTcp = 0
     
     def Iniciar(self):
         self.SolicitarDatos()
         with open('logs/log-RR.txt', 'w') as archivo:
             while (not self.listaProcesos.esta_vacia() or 
-                   not self.listaProcesosListos.esta_vacia() or 
-                   not self.listaProcesosBloqueados.esta_vacia() or 
-                   self.procesoEjecutando is not None or
-                   not self.procesosNuevos.esta_vacia()):
+                not self.listaProcesosListos.esta_vacia() or 
+                not self.listaProcesosBloqueados.esta_vacia() or 
+                self.procesoEjecutando is not None or
+                not self.procesosNuevos.esta_vacia()):
                 
                 self.log(f"--------------------", archivo)
                 self.log(f"TIEMPO {self.tiempo}", archivo)
@@ -172,25 +173,29 @@ class RoundRobin:
                 self.esperandoAListo(archivo)
                 self.bloqueadoAListo(archivo)
                 
-                if self.ejecTcp:
+                if self.ejecTfp:
+                    self.finalizarProceso(archivo)
+                elif self.ejecTcp:
                     self.ejecutarTcp(archivo)
-                if self.procesoEjecutando:
-                    if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga() and not self.ejecTip:
+                elif self.procesoEjecutando and not self.ejecTip:
+                    if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
                         self.log(f"Se ejecuta el proceso {self.procesoEjecutando.getNombre()}", archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
-                        self.tiempoQuantum += 1
+                        self.quantumRestante -= 1
                         
-                        if self.tiempoQuantum == self.quantum:
-                            self.log(f"Quantum del proceso {self.procesoEjecutando.getNombre()} ha expirado", archivo)
-                            self.interrupcion(archivo)
-                    
-                    if self.procesoEjecutando and self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
+                    if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
+                        self.ejecutarTcp(archivo)
+                    elif self.quantumRestante == 0:
+                        self.log(f"Quantum agotado para el proceso {self.procesoEjecutando.getNombre()}", archivo)
+                        self.interrupcion(archivo)
+                        self.ejecutarTcp(archivo)
                 else:
-                    self.listoAEjecutar(archivo)
-                    if self.procesoEjecutando is None:
-                        if not self.ejecTcp and not self.ejecTip:
+                    if not self.ejecTip:
+                        self.listoAEjecutar(archivo)
+                    if self.procesoEjecutando is None and not self.ejecTip:
+                        if not self.ejecTcp and not self.ejecTfp:
                             self.log("CPU ociosa", archivo)
                             self.cpuOciosa += 1
                 
@@ -204,6 +209,7 @@ class RoundRobin:
             self.impProcesos(archivo)
             self.calcularTiemposMedios(archivo)
             self.calcularUsoCPU(archivo)
+
     
     def impProcesos(self, archivo):
         for proceso in self.listaProcesosFinalizados.items:

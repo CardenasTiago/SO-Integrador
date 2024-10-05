@@ -14,11 +14,12 @@ class Srtn:
         self.tiempo = 0
         self.ejecTip = False
         self.tip = 0
+        self.ejecTfp = False
         self.tfp = 0
         self.tcp = 0
         self.ejecTcp = False
         self.conTcp = 0
-        self.contTfp = 0
+        self.conTfp = 0
         self.cpuOciosa = 0
         self.cpuSO = 0
         self.cpuProcesos = 0
@@ -39,6 +40,7 @@ class Srtn:
         if self.procesoEjecutando:
             self.procesoEjecutando.pcb.duracionRafagaRestante = self.procesoEjecutando.duracionRafaga - self.procesoEjecutando.tiempoRafaga
             self.listaProcesosListos.encolar(self.procesoEjecutando)
+            self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante)
             self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
             self.procesoEjecutando = None
             if not self.ejecTip:
@@ -64,8 +66,8 @@ class Srtn:
                 self.ejecTip = False
                 
                 if self.procesoEjecutando:
-                    if frente.pcb.duracionRafagaRestante > self.procesoEjecutando.pcb.duracionRafagaRestante:
-                        self.log(f"Proceso {frente.nombre} tiene mayor prioridad que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
+                    if frente.pcb.duracionRafagaRestante < self.procesoEjecutando.pcb.duracionRafagaRestante:
+                        self.log(f"Proceso {frente.nombre} menor rafaga restante que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
                         self.interrupcion(archivo)
                         self.ejecTcp = True
                         self.conTcp = 0
@@ -105,8 +107,9 @@ class Srtn:
             self.log(f"El proceso {proceso.getNombre()} pasó de bloqueado a listo", archivo)
         
         if procesos_a_mover and self.procesoEjecutando:
-            proceso_min_duracion = min(procesos_a_mover, key=lambda p: p.pcb.duracionRafagaRestante)
-            if proceso_min_duracion.pcb.duracionRafagaRestante > self.procesoEjecutando.pcb.duracionRafagaRestante:
+            proceso_menorRaf = min(procesos_a_mover, key=lambda p: p.pcb.duracionRafagaRestante)
+            if proceso_menorRaf.pcb.duracionRafagaRestante < self.procesoEjecutando.pcb.duracionRafagaRestante:
+                self.log(f"Proceso {proceso_menorRaf.nombre} menor rafaga restante que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
                 self.interrupcion(archivo)
     
     def ejecutarTcp(self, archivo):
@@ -115,8 +118,8 @@ class Srtn:
             self.conTcp += 1
             self.cpuSO += 1
         else:
+            self.log(f"Fin de TCP", archivo)
             self.ejecTcp = False
-            self.conTcp = 0
             if not self.listaProcesosListos.esta_vacia():
                 self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante)
                 self.listoAEjecutar(archivo)
@@ -129,40 +132,34 @@ class Srtn:
             if self.procesoEjecutando.pcb.cantRafagasRestante <= 0:
                 self.finalizarProceso(archivo)
             else:
-                # Verificar si hay que ejecutar TCP
-                if self.ejecTcp:
-                    self.ejecutarTcp(archivo)
-                else:
-                    self.bloquearProceso(archivo)
-    
+                self.bloquearProceso(archivo)
+            self.ejecTcp = True
+            self.conTcp = 0
+
     
     def finalizarProceso(self, archivo):
-        if self.contTfp < self.tfp:
-            self.contTfp += 1
-            self.cpuSO += 1
-            self.log(f"Ejecutando TFP ({self.contTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
+        if self.conTfp < self.tfp:
+            self.log(f"Ejecutando TFP ({self.conTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
+            self.ejecTfp = True
+            self.conTfp += 1
+            self.cpuSO += 1     
         else:
+            self.ejecTfp = False
             tiempoFinalizacion = self.tiempo
             tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
             self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
             self.tiemposRetorno.append(tiempoRetorno)
             self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
-            self.log(f"Proceso {self.procesoEjecutando.getNombre()} Finalizó", archivo)
+            self.log(f"TFP ({self.conTfp}/{self.tfp}) finalizado para el proceso {self.procesoEjecutando.getNombre()}", archivo)
             self.procesoEjecutando = None
-            self.contTfp = 0
-            self.listoAEjecutar(archivo)
+            self.conTfp = 0
     
     def bloquearProceso(self, archivo):
-        if self.conTcp < self.tcp:
-            self.conTcp += 1
-            self.cpuSO += 1
-            self.log(f"Ejecutando TCP para Bloquear el proceso {self.procesoEjecutando.getNombre()}", archivo)
-        else:
-            self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-            self.log(f"Proceso {self.procesoEjecutando.getNombre()} bloqueado", archivo)
-            self.procesoEjecutando = None
-            self.conTcp = 0
-            self.listoAEjecutar(archivo)
+        self.log(f"Proceso {self.procesoEjecutando.getNombre()} bloqueado", archivo)
+        self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
+        self.procesoEjecutando = None
+        self.ejecTcp = True
+        self.conTcp = 0
     
     def Iniciar(self):
         self.SolicitarDatos()
@@ -179,7 +176,9 @@ class Srtn:
                 self.esperandoAListo(archivo)
                 self.bloqueadoAListo(archivo)
                 
-                if self.ejecTcp:
+                if self.ejecTfp:
+                    self.finalizarProceso(archivo)
+                elif self.ejecTcp:
                     self.ejecutarTcp(archivo)
                 elif self.procesoEjecutando:
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
@@ -188,12 +187,10 @@ class Srtn:
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
-                        if not self.ejecTcp:
-                            self.listoAEjecutar(archivo)
                 else:
                     self.listoAEjecutar(archivo)
                     if self.procesoEjecutando is None:
-                        if not self.ejecTcp and not self.ejecTip:
+                        if not self.ejecTcp and not self.ejecTip and not self.ejecTfp:
                             self.log("CPU ociosa", archivo)
                             self.cpuOciosa += 1
                 
