@@ -14,6 +14,8 @@ class Fcfs:
         self.tip = 0
         self.tfp = 0
         self.tcp = 0
+        self.ejecTcp = False
+        self.ejecTfp = False
         self.conTcp = 0
         self.contTfp = 0
         self.so = False
@@ -68,6 +70,7 @@ class Fcfs:
                 if self.conTcp == 0 or self.primerProceso:
                     self.procesoEjecutando = self.listaProcesosListos.desencolar()
                     self.log("Proceso " + self.procesoEjecutando.getNombre() + " entro en ejecucion",archivo)
+                    self.procesoEjecutando.tiempoRafaga += 1
                     self.procesoEjecutando.pcb.cantRafagasRestante -= 1
                     self.conTcp = 0
                     self.primerProceso = False
@@ -77,62 +80,69 @@ class Fcfs:
     
     
     def bloqueadoAListo(self, archivo):
-        for proceso in self.listaProcesosBloqueados.items:
-            if proceso.tiempoBloqueado < proceso.entradaSalida:
-                proceso.tiempoBloqueado += 1
-            else:
-                listo = self.listaProcesosBloqueados.desencolar()
-                listo.tiempoBloqueado = 0
-                listo.tiempoRafaga = 0
-                self.listaProcesosListos.encolar(listo)
-                self.log("El proceso "+ listo.getNombre() +" pasó de bloqueado a listo", archivo)
-                
-    def listoABloqueado(self, archivo):
-        if self.procesoEjecutando.pcb.cantRafagasRestante == 0: 
-            if self.contTfp == self.tfp:
-                    tiempoFinalizacion = self.tiempo
-                    tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
-                    self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
-                    
-                    self.tiemposRetorno.append(tiempoRetorno)
-                    
-                    self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
-                    self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
-                    self.procesoEjecutando = None
-                    self.contTfp = 0
-                    self.conTcp = 0
-                    self.so = False
-                    if not self.procesosNuevos.esta_vacia():
-                        self.esperandoAListo(archivo)
-            else:
-                self.contTfp += 1
-                self.cpuSO += 1
-                self.so = True
-                self.log(f"Esperando el TFP para finalizar el proceso {self.procesoEjecutando.nombre}" , archivo)
-        else:
-            if self.procesosNuevos.esta_vacia():
-                if self.conTcp == self.tcp:
-                    self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-                    self.procesoEjecutando.tiempoBloqueado += 1
-                    self.procesoEjecutando = None
-                    self.conTcp = 0
-                    self.so = False
-                    self.log("Fin de TCP", archivo)
-                    self.listoAEjecutar(archivo)
+        if not self.listaProcesosBloqueados.esta_vacia():
+            for proceso in self.listaProcesosBloqueados.items:
+                if proceso.tiempoBloqueado < proceso.entradaSalida:
+                    proceso.tiempoBloqueado += 1
                 else:
-                    self.log("Se ejecuta el TCP", archivo)
-                    self.conTcp += 1
-                    self.cpuSO += 1
-                    self.so = True
-            else:
-                self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-                self.procesoEjecutando.tiempoBloqueado += 1
+                    listo = self.listaProcesosBloqueados.desencolar()
+                    listo.tiempoBloqueado = 0
+                    listo.tiempoRafaga = 0
+                    self.listaProcesosListos.encolar(listo)
+                    self.log("El proceso "+ listo.getNombre() +" pasó de bloqueado a listo", archivo)
+                
+    def ejecutarTCP(self, archivo):
+        if self.procesosNuevos.esta_vacia():
+            if self.conTcp == self.tcp:
+                if self.procesoEjecutando != None:
+                    self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
                 self.procesoEjecutando = None
                 self.conTcp = 0
                 self.so = False
-                self.procesoEjecutando = None
+                self.ejecTcp = False
+                self.log("Fin de TCP", archivo)
+            else:
+                self.log("Se ejecuta el TCP", archivo)
+                self.conTcp += 1
+                self.cpuSO += 1
+                self.ejecTcp = True
+                self.so = True
+        else:
+            self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
+            self.procesoEjecutando = None
+            self.conTcp = 0
+            self.so = True
+            self.ejecTcp = False
+            self.esperandoAListo(archivo)
+            
+    def ejecutarTFP(self, archivo):
+        if self.contTfp == self.tfp:
+            tiempoFinalizacion = self.tiempo
+            tiempoRetorno = tiempoFinalizacion - self.procesoEjecutando.getTiempoArrivo()
+            self.procesoEjecutando.calcularTiempoRetorno(tiempoFinalizacion)
+
+            self.tiemposRetorno.append(tiempoRetorno)
+
+            self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
+            self.log("Proceso " + self.procesoEjecutando.getNombre() + " Finalizó", archivo)
+            self.procesoEjecutando = None
+            self.contTfp = 0
+            self.conTcp = 0
+            self.so = False
+            self.ejecTfp = False
+            if not self.procesosNuevos.esta_vacia():
                 self.esperandoAListo(archivo)
-          
+                self.ejecTfp = False
+                self.ejecTcp = False
+            else:
+                self.so = True
+                self.ejecutarTCP(archivo)
+        else:
+            self.contTfp += 1
+            self.cpuSO += 1
+            self.so = True
+            self.log(f"Ejecuta TFP para finalizar el proceso {self.procesoEjecutando.nombre}", archivo)
+
             
     def Iniciar(self):
         self.SolicitarDatos()
@@ -142,10 +152,10 @@ class Fcfs:
                 self.log("TIEMPO " + str(self.tiempo), archivo)
                 self.esperandoAListo(archivo)
                 self.bloqueadoAListo(archivo)
-                if self.so and self.conTcp >= self.tcp:
-                    self.listoABloqueado(archivo)
-                elif self.so and self.contTfp >= self.tfp:
-                    self.listoABloqueado(archivo)
+                if self.so and self.ejecTcp:
+                    self.ejecutarTCP(archivo)
+                elif self.so and self.ejecTfp:
+                    self.ejecutarTFP(archivo)
                 if self.procesoEjecutando == None :
                     if not self.listaProcesosListos.esta_vacia() and not self.so:
                         self.listoAEjecutar(archivo)
@@ -157,11 +167,15 @@ class Fcfs:
                         self.log("Se  ejecuta el proceso "+ self.procesoEjecutando.getNombre(), archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
                         self.cpuProcesos += 1
-                    if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
+                    if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga() and not self.ejecTcp and not self.ejecTfp:
                         self.log(f"Proceso {self.procesoEjecutando.nombre} entró en bloqueo", archivo)
-                        self.listoABloqueado(archivo)
-                        if  not self.so:
-                            self.listoAEjecutar(archivo)
+                        if self.procesoEjecutando.pcb.cantRafagasRestante == 0:
+                            self.so = True
+                            self.ejecTfp = True
+                        else: 
+                            self.so = True
+                            self.ejecTcp = True
+  
                         
                 for proceso in self.listaProcesosListos.items:
                     proceso.tiempoEstadoListo += 1  
