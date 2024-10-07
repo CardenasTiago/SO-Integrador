@@ -13,6 +13,7 @@ class Proceso:
         self.tiempoBloqueado = 0
         self.tiempoEstadoListo = 0
         self.tiempoRafaga = 0
+        self.primeraRafaga = True
         
         self.tiempoRetorno = 0
         self.tiempoRetornoNormalizado = 0
