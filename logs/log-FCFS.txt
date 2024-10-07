@@ -43,14 +43,15 @@ Proceso P3 Entra a Listo
 Se  ejecuta el proceso P3
 --------------------
 TIEMPO 9
+El proceso P1 pasó de bloqueado a listo
 Se  ejecuta el proceso P3
 --------------------
 TIEMPO 10
-El proceso P1 pasó de bloqueado a listo
 Se  ejecuta el proceso P3
 Proceso P3 entró en bloqueo
 --------------------
 TIEMPO 11
+El proceso P2 pasó de bloqueado a listo
 Proceso P4 ejecuta tip
 No hay proceso en ejecucion y no hay procesos listos
 --------------------
@@ -60,11 +61,11 @@ Proceso P4 Entra a Listo
 Se  ejecuta el proceso P4
 --------------------
 TIEMPO 13
-El proceso P2 pasó de bloqueado a listo
 Se  ejecuta el proceso P4
 Proceso P4 entró en bloqueo
 --------------------
 TIEMPO 14
+El proceso P3 pasó de bloqueado a listo
 Ejecuta TFP para finalizar el proceso P4
 --------------------
 TIEMPO 15
@@ -75,7 +76,6 @@ No hay proceso en ejecucion y no hay procesos listos
 TIEMPO 16
 Proceso P5 finaliza su tip
 Proceso P5 Entra a Listo
-El proceso P3 pasó de bloqueado a listo
 Se  ejecuta el proceso P5
 --------------------
 TIEMPO 17
@@ -99,11 +99,11 @@ TIEMPO 22
 Se  ejecuta el proceso P1
 --------------------
 TIEMPO 23
+El proceso P5 pasó de bloqueado a listo
 Se  ejecuta el proceso P1
 Proceso P1 entró en bloqueo
 --------------------
 TIEMPO 24
-El proceso P5 pasó de bloqueado a listo
 Se ejecuta el TCP
 --------------------
 TIEMPO 25
@@ -127,10 +127,10 @@ Fin de TCP
 Proceso P3 entro en ejecucion
 --------------------
 TIEMPO 30
+El proceso P1 pasó de bloqueado a listo
 Se  ejecuta el proceso P3
 --------------------
 TIEMPO 31
-El proceso P1 pasó de bloqueado a listo
 Se  ejecuta el proceso P3
 Proceso P3 entró en bloqueo
 --------------------

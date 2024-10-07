@@ -82,16 +82,20 @@ class Spn:
     
     def bloqueadoAListo(self, archivo):
         if not self.listaProcesosBloqueados.esta_vacia():
+            procesos_a_listo = []
             for proceso in self.listaProcesosBloqueados.items:
-                if proceso.tiempoBloqueado < proceso.entradaSalida:
-                    proceso.tiempoBloqueado += 1
-                else:
-                    listo = self.listaProcesosBloqueados.desencolar()
-                    listo.tiempoBloqueado = 0
-                    listo.tiempoRafaga = 0
-                    self.listaProcesosListos.encolar(listo)
-                    self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga)
-                    self.log("El proceso "+ listo.getNombre() +" pasó de bloqueado a listo", archivo)
+                proceso.tiempoBloqueado += 1
+                
+                if proceso.tiempoBloqueado == proceso.entradaSalida:
+                    procesos_a_listo.append(proceso)
+            
+            for proceso in procesos_a_listo:
+                self.listaProcesosBloqueados.desencolarProceso(proceso)
+                proceso.tiempoBloqueado = 0
+                proceso.tiempoRafaga = 0 
+                self.listaProcesosListos.encolar(proceso)
+                self.log(f"El proceso {proceso.getNombre()} pasó de bloqueado a listo", archivo)
+                self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga)
                 
     def ejecutarTCP(self, archivo):
         if self.procesosNuevos.esta_vacia():
@@ -160,7 +164,6 @@ class Spn:
                     self.ejecutarTFP(archivo)
                 if self.procesoEjecutando == None :
                     if not self.listaProcesosListos.esta_vacia() and not self.so:
-                        self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga)
                         self.listoAEjecutar(archivo)
                     else:
                         self.log("No hay proceso en ejecucion y no hay procesos listos", archivo)
