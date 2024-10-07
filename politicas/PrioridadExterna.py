@@ -125,7 +125,7 @@ class PrioridadExterna:
     
     def listoABloqueado(self, archivo):
         if self.procesoEjecutando:
-            self.procesoEjecutando.tiempoRafaga = 0  # Reiniciamos el tiempo de ráfaga
+            self.procesoEjecutando.tiempoRafaga = 0
             self.procesoEjecutando.pcb.cantRafagasRestante -= 1
             if self.procesoEjecutando.pcb.cantRafagasRestante <= 0:
                 self.ejecTfp = True

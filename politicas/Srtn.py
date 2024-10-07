@@ -14,6 +14,7 @@ class Srtn:
         self.tiempo = 0
         self.ejecTip = False
         self.tip = 0
+        self.conTip = 0
         self.ejecTfp = False
         self.tfp = 0
         self.tcp = 0
@@ -23,7 +24,6 @@ class Srtn:
         self.cpuOciosa = 0
         self.cpuSO = 0
         self.cpuProcesos = 0
-        self.so = False
         self.tiemposRetorno = []
     
     def SolicitarDatos(self):
@@ -36,58 +36,47 @@ class Srtn:
         print(mensaje)
         archivo.write(mensaje + '\n')
     
-    def interrupcion(self, archivo):
+    def interrupcion(self, archivo, proceso):
         if self.procesoEjecutando:
             self.procesoEjecutando.pcb.duracionRafagaRestante = self.procesoEjecutando.duracionRafaga - self.procesoEjecutando.tiempoRafaga
             self.listaProcesosListos.encolar(self.procesoEjecutando)
             self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante)
             self.log(f"Proceso {self.procesoEjecutando.nombre} es interrumpido", archivo)
             self.procesoEjecutando = None
-            if not self.ejecTip:
+            self.procesoEjecutando = proceso
+            if self.procesoEjecutando.primeraRafaga:
+                self.ejecTip = True
+            else:
                 self.ejecTcp = True
-            self.conTcp = 0
     
     def esperandoAListo(self, archivo):
         for proceso in self.listaProcesos.items:
             if proceso.getTiempoArrivo() == self.tiempo:
-                self.ejecTip = True
-                if self.procesoEjecutando:
-                    self.interrupcion(archivo)
+                self.log(f"Proceso {proceso.nombre} Entra a Listo", archivo)
                 self.listaProcesos.desencolarProceso(proceso)
-                self.procesosNuevos.encolar(proceso)
-                
-        frente = self.procesosNuevos.frente()
-        if frente != None:
-            if frente.tiempoEsperando == self.tip:
-                self.log(f"Proceso {frente.nombre} Entra a Listo", archivo)
-                self.procesosNuevos.desencolarProceso(frente)
-                self.listaProcesosListos.encolar(frente)
+                self.listaProcesosListos.encolar(proceso)
                 self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante)
-                self.ejecTip = False
                 
                 if self.procesoEjecutando:
-                    if frente.pcb.duracionRafagaRestante < self.procesoEjecutando.pcb.duracionRafagaRestante:
-                        self.log(f"Proceso {frente.nombre} menor rafaga restante que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
-                        self.interrupcion(archivo)
-                        self.ejecTcp = True
+                    if proceso.pcb.duracionRafagaRestante < self.procesoEjecutando.pcb.duracionRafagaRestante:
+                        self.log(f"Proceso {proceso.nombre} tiene menor rafaga que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
+                        self.interrupcion(archivo, proceso)
                         self.conTcp = 0
-            else:
-                self.ejecTip = True
-                frente.tiempoEsperando += 1
-                self.cpuSO += 1            
-                self.log(f"Proceso {frente.nombre} ejecuta tip", archivo)  
+                else:
+                    self.procesoEjecutando = self.listaProcesosListos.desencolar()
+                    self.ejecTip = True
     
     def listoAEjecutar(self, archivo):
         frente = self.listaProcesosListos.frente()
         if self.procesoEjecutando == None and frente != None:
-            if self.conTcp == self.tcp or self.primerProceso:
+                self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante)
                 self.procesoEjecutando = self.listaProcesosListos.desencolar()
-                self.log(f"Proceso {self.procesoEjecutando.getNombre()} entró en ejecución", archivo)
-                self.conTcp = 0
-                self.primerProceso = False
-            else:
-                self.conTcp += 1
-                self.cpuSO += 1
+                if not self.procesoEjecutando.primeraRafaga:
+                        self.ejecutarTcp(archivo)
+                        self.log(f"Proceso {self.procesoEjecutando.getNombre()} entró en ejecución", archivo)
+                        
+                else:
+                    self.ejecutarTip(archivo)
         elif frente == None:
             self.log("No hay procesos listos", archivo)
     
@@ -102,44 +91,56 @@ class Srtn:
         for proceso in procesos_a_mover:
             self.listaProcesosBloqueados.desencolarProceso(proceso)
             proceso.tiempoBloqueado = 0
-            proceso.tiempoRafaga = 0
+            proceso.pcb.duracionRafagaRestante = proceso.duracionRafaga
             self.listaProcesosListos.encolar(proceso)
             self.log(f"El proceso {proceso.getNombre()} pasó de bloqueado a listo", archivo)
         
         if procesos_a_mover and self.procesoEjecutando:
-            proceso_menorRaf = min(procesos_a_mover, key=lambda p: p.pcb.duracionRafagaRestante)
-            if proceso_menorRaf.pcb.duracionRafagaRestante < self.procesoEjecutando.pcb.duracionRafagaRestante:
-                self.log(f"Proceso {proceso_menorRaf.nombre} menor rafaga restante que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
-                self.interrupcion(archivo)
+            proceso_menor_rafaga = min(procesos_a_mover, key=lambda p: p.pcb.duracionRafagaRestante)
+            if proceso_menor_rafaga.pcb.duracionRafagaRestante < self.procesoEjecutando.pcb.duracionRafagaRestante:
+                self.log(f"Proceso {proceso_menor_rafaga.nombre} tiene menor rafaga que {self.procesoEjecutando.getNombre()}, iniciando conmutación", archivo)
+                self.interrupcion(archivo, proceso_menor_rafaga)
+    
+    def ejecutarTip(self,archivo):
+        if self.conTip < self.tip:
+            self.log(f"Se ejecuta TIP de proceso {self.procesoEjecutando.nombre}", archivo)
+            self.conTip += 1
+            self.cpuSO += 1
+            self.ejecTip = True
+        else:
+            self.log(f"Fin de TIP", archivo)
+            self.ejecTip = False
+            self.conTip = 0
+            self.procesoEjecutando.primeraRafaga = False
     
     def ejecutarTcp(self, archivo):
         if self.conTcp < self.tcp:
             self.log(f"Ejecutando TCP ({self.conTcp + 1}/{self.tcp})", archivo)
             self.conTcp += 1
             self.cpuSO += 1
+            self.ejecTcp = True
         else:
             self.log(f"Fin de TCP", archivo)
             self.ejecTcp = False
-            if not self.listaProcesosListos.esta_vacia():
-                self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.pcb.duracionRafagaRestante)
-                self.listoAEjecutar(archivo)
-            else:
-                self.log("No hay más procesos listos para ejecutar.", archivo)
-    
-    def listoABloqueado(self, archivo):
-        if self.procesoEjecutando:
-            self.procesoEjecutando.pcb.cantRafagasRestante -= 1
-            if self.procesoEjecutando.pcb.cantRafagasRestante <= 0:
-                self.finalizarProceso(archivo)
-            else:
-                self.bloquearProceso(archivo)
-            self.ejecTcp = True
             self.conTcp = 0
 
     
-    def finalizarProceso(self, archivo):
+    def listoABloqueado(self, archivo):
+        if self.procesoEjecutando:
+            self.procesoEjecutando.tiempoRafaga = 0 
+            self.procesoEjecutando.pcb.cantRafagasRestante -= 1
+            if self.procesoEjecutando.pcb.cantRafagasRestante <= 0:
+                self.ejecTfp = True
+            else:
+                self.log(f"Proceso {self.procesoEjecutando.getNombre()} bloqueado", archivo)
+                self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
+                self.listaProcesosListos.desencolarProceso(self.procesoEjecutando)
+                self.procesoEjecutando = None
+                
+    
+    def ejecutarTfp(self, archivo):
         if self.conTfp < self.tfp:
-            self.log(f"Ejecutando TFP ({self.conTfp}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
+            self.log(f"Ejecutando TFP ({self.conTfp + 1}/{self.tfp}) para finalizar el proceso {self.procesoEjecutando.getNombre()}", archivo)
             self.ejecTfp = True
             self.conTfp += 1
             self.cpuSO += 1     
@@ -151,15 +152,10 @@ class Srtn:
             self.tiemposRetorno.append(tiempoRetorno)
             self.listaProcesosFinalizados.encolar(self.procesoEjecutando)
             self.log(f"TFP ({self.conTfp}/{self.tfp}) finalizado para el proceso {self.procesoEjecutando.getNombre()}", archivo)
+            self.listaProcesosListos.desencolarProceso(self.procesoEjecutando)
             self.procesoEjecutando = None
             self.conTfp = 0
-    
-    def bloquearProceso(self, archivo):
-        self.log(f"Proceso {self.procesoEjecutando.getNombre()} bloqueado", archivo)
-        self.listaProcesosBloqueados.encolar(self.procesoEjecutando)
-        self.procesoEjecutando = None
-        self.ejecTcp = True
-        self.conTcp = 0
+
     
     def Iniciar(self):
         self.SolicitarDatos()
@@ -167,8 +163,7 @@ class Srtn:
             while (not self.listaProcesos.esta_vacia() or 
                    not self.listaProcesosListos.esta_vacia() or 
                    not self.listaProcesosBloqueados.esta_vacia() or 
-                   self.procesoEjecutando is not None or
-                   not self.procesosNuevos.esta_vacia()):
+                   self.procesoEjecutando is not None):
                 
                 self.log(f"--------------------", archivo)
                 self.log(f"TIEMPO {self.tiempo}", archivo)
@@ -177,20 +172,24 @@ class Srtn:
                 self.bloqueadoAListo(archivo)
                 
                 if self.ejecTfp:
-                    self.finalizarProceso(archivo)
+                    self.ejecutarTfp(archivo)
                 elif self.ejecTcp:
                     self.ejecutarTcp(archivo)
-                elif self.procesoEjecutando:
+                elif self.ejecTip:
+                    self.ejecutarTip(archivo)
+                
+                if self.procesoEjecutando and (not self.ejecTcp and not self.ejecTfp and not self.ejecTip):
                     if self.procesoEjecutando.getTiempoRafaga() < self.procesoEjecutando.getDuracionRafaga():
                         self.log(f"Se ejecuta el proceso {self.procesoEjecutando.getNombre()}", archivo)
                         self.procesoEjecutando.tiempoRafaga += 1
+                        self.procesoEjecutando.pcb.duracionRafagaRestante = self.procesoEjecutando.duracionRafaga - self.procesoEjecutando.tiempoRafaga
                         self.cpuProcesos += 1
                     if self.procesoEjecutando.getTiempoRafaga() == self.procesoEjecutando.getDuracionRafaga():
                         self.listoABloqueado(archivo)
                 else:
-                    self.listoAEjecutar(archivo)
-                    if self.procesoEjecutando is None:
-                        if not self.ejecTcp and not self.ejecTip and not self.ejecTfp:
+                    if not self.ejecTcp and not self.ejecTfp and not self.ejecTip:
+                        self.listoAEjecutar(archivo)
+                        if self.procesoEjecutando is None:
                             self.log("CPU ociosa", archivo)
                             self.cpuOciosa += 1
                 
