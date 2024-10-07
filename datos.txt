@@ -3,7 +3,3 @@ P2,2,2,2,4,1
 P3,4,2,3,3,3
 P4,6,1,2,3,4
 P5,8,2,4,2,2
-
-
-
-self.listaProcesosListos.ordenar(clave=lambda proceso: proceso.duracionRafaga)
