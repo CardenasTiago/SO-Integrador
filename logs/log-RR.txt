@@ -1,167 +1,233 @@
 --------------------
 TIEMPO 0
 Proceso P1 Entra a Listo
+Se ejecuta TIP de proceso P1
+--------------------
+TIEMPO 1
 Fin de TIP
 Se ejecuta el proceso P1
 --------------------
-TIEMPO 1
+TIEMPO 2
+Proceso P2 Entra a Listo
 Se ejecuta el proceso P1
 Quantum alcanzado para el proceso P1
 Proceso P1 es interrumpido
 --------------------
-TIEMPO 2
-Proceso P2 Entra a Listo
+TIEMPO 3
+Se ejecuta TIP de proceso P2
+--------------------
+TIEMPO 4
+Proceso P3 Entra a Listo
+Fin de TIP
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 5
+Se ejecuta el proceso P2
+Proceso P2 bloqueado
+--------------------
+TIEMPO 6
+Proceso P4 Entra a Listo
+Ejecutando TCP (1/1) proceso P1
+--------------------
+TIEMPO 7
 Fin de TCP
 Se ejecuta el proceso P1
 Proceso P1 bloqueado
 --------------------
-TIEMPO 3
-Fin de TIP
-Se ejecuta el proceso P2
+TIEMPO 8
+Proceso P5 Entra a Listo
+Se ejecuta TIP de proceso P3
 --------------------
-TIEMPO 4
-Proceso P3 Entra a Listo
-Se ejecuta el proceso P2
-Proceso P2 bloqueado
---------------------
-TIEMPO 5
+TIEMPO 9
 Fin de TIP
 Se ejecuta el proceso P3
 --------------------
-TIEMPO 6
-Proceso P4 Entra a Listo
+TIEMPO 10
+El proceso P2 pasó de bloqueado a listo
 Se ejecuta el proceso P3
 Quantum alcanzado para el proceso P3
 Proceso P3 es interrumpido
 --------------------
-TIEMPO 7
+TIEMPO 11
+Se ejecuta TIP de proceso P4
+--------------------
+TIEMPO 12
 Fin de TIP
 Se ejecuta el proceso P4
 --------------------
-TIEMPO 8
-Proceso P5 Entra a Listo
+TIEMPO 13
 El proceso P1 pasó de bloqueado a listo
 Se ejecuta el proceso P4
 --------------------
-TIEMPO 9
-El proceso P2 pasó de bloqueado a listo
-TFP finalizado para el proceso P4
-Fin de TCP
-Se ejecuta el proceso P3
-Proceso P3 bloqueado
---------------------
-TIEMPO 10
-Fin de TIP
-Se ejecuta el proceso P5
---------------------
-TIEMPO 11
-Se ejecuta el proceso P5
-Quantum alcanzado para el proceso P5
-Proceso P5 es interrumpido
---------------------
-TIEMPO 12
-Fin de TCP
-Se ejecuta el proceso P1
---------------------
-TIEMPO 13
-El proceso P3 pasó de bloqueado a listo
-Se ejecuta el proceso P1
-Quantum alcanzado para el proceso P1
-Proceso P1 es interrumpido
---------------------
 TIEMPO 14
-Fin de TCP
-Se ejecuta el proceso P2
+Ejecutando TFP (1/1) para finalizar el proceso P4
 --------------------
 TIEMPO 15
-Se ejecuta el proceso P2
+TFP finalizado para el proceso P4
+Se ejecuta TIP de proceso P5
 --------------------
 TIEMPO 16
-TFP finalizado para el proceso P2
-Fin de TCP
+Fin de TIP
 Se ejecuta el proceso P5
 --------------------
 TIEMPO 17
 Se ejecuta el proceso P5
-Proceso P5 bloqueado
---------------------
-TIEMPO 18
-Fin de TCP
-Se ejecuta el proceso P3
---------------------
-TIEMPO 19
-Se ejecuta el proceso P3
-Quantum alcanzado para el proceso P3
-Proceso P3 es interrumpido
---------------------
-TIEMPO 20
-El proceso P5 pasó de bloqueado a listo
-Fin de TCP
-Se ejecuta el proceso P1
-Proceso P1 bloqueado
---------------------
-TIEMPO 21
-Fin de TCP
-Se ejecuta el proceso P3
---------------------
-TIEMPO 22
-TFP finalizado para el proceso P3
-Fin de TCP
-Se ejecuta el proceso P5
---------------------
-TIEMPO 23
-Se ejecuta el proceso P5
 Quantum alcanzado para el proceso P5
 Proceso P5 es interrumpido
 --------------------
-TIEMPO 24
+TIEMPO 18
+Ejecutando TCP (1/1) proceso P2
+--------------------
+TIEMPO 19
 Fin de TCP
-Se ejecuta el proceso P5
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 20
+Se ejecuta el proceso P2
+--------------------
+TIEMPO 21
+Ejecutando TFP (1/1) para finalizar el proceso P2
+--------------------
+TIEMPO 22
+TFP finalizado para el proceso P2
+Ejecutando TCP (1/1) proceso P3
+--------------------
+TIEMPO 23
+Fin de TCP
+Se ejecuta el proceso P3
+Proceso P3 bloqueado
+--------------------
+TIEMPO 24
+Ejecutando TCP (1/1) proceso P1
 --------------------
 TIEMPO 25
-Se ejecuta el proceso P5
---------------------
-TIEMPO 26
-El proceso P1 pasó de bloqueado a listo
-TFP finalizado para el proceso P5
 Fin de TCP
 Se ejecuta el proceso P1
 --------------------
-TIEMPO 27
+TIEMPO 26
 Se ejecuta el proceso P1
 Quantum alcanzado para el proceso P1
 Proceso P1 es interrumpido
 --------------------
+TIEMPO 27
+El proceso P3 pasó de bloqueado a listo
+Ejecutando TCP (1/1) proceso P5
+--------------------
 TIEMPO 28
+Fin de TCP
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 29
+Se ejecuta el proceso P5
+Proceso P5 bloqueado
+--------------------
+TIEMPO 30
+Ejecutando TCP (1/1) proceso P1
+--------------------
+TIEMPO 31
+Fin de TCP
+Se ejecuta el proceso P1
+Proceso P1 bloqueado
+--------------------
+TIEMPO 32
+El proceso P5 pasó de bloqueado a listo
+Ejecutando TCP (1/1) proceso P3
+--------------------
+TIEMPO 33
+Fin de TCP
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 34
+Se ejecuta el proceso P3
+Quantum alcanzado para el proceso P3
+Proceso P3 es interrumpido
+--------------------
+TIEMPO 35
+Ejecutando TCP (1/1) proceso P5
+--------------------
+TIEMPO 36
+Fin de TCP
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 37
+El proceso P1 pasó de bloqueado a listo
+Se ejecuta el proceso P5
+Quantum alcanzado para el proceso P5
+Proceso P5 es interrumpido
+--------------------
+TIEMPO 38
+Ejecutando TCP (1/1) proceso P3
+--------------------
+TIEMPO 39
+Fin de TCP
+Se ejecuta el proceso P3
+--------------------
+TIEMPO 40
+Ejecutando TFP (1/1) para finalizar el proceso P3
+--------------------
+TIEMPO 41
+TFP finalizado para el proceso P3
+Ejecutando TCP (1/1) proceso P1
+--------------------
+TIEMPO 42
 Fin de TCP
 Se ejecuta el proceso P1
 --------------------
-TIEMPO 29
+TIEMPO 43
+Se ejecuta el proceso P1
+Quantum alcanzado para el proceso P1
+Proceso P1 es interrumpido
+--------------------
+TIEMPO 44
+Ejecutando TCP (1/1) proceso P5
+--------------------
+TIEMPO 45
+Fin de TCP
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 46
+Se ejecuta el proceso P5
+--------------------
+TIEMPO 47
+Ejecutando TFP (1/1) para finalizar el proceso P5
+--------------------
+TIEMPO 48
+TFP finalizado para el proceso P5
+Ejecutando TCP (1/1) proceso P1
+--------------------
+TIEMPO 49
+Fin de TCP
+Se ejecuta el proceso P1
+--------------------
+TIEMPO 50
+Ejecutando TFP (1/1) para finalizar el proceso P1
+--------------------
+TIEMPO 51
 TFP finalizado para el proceso P1
 CPU ociosa
 --------------------------
 DATOS SOLICITADOS
 Proceso P4:
-Tiempo de retorno: 3
-Tiempo de retorno normalizado: 1.5
+Tiempo de retorno: 9
+Tiempo de retorno normalizado: 4.5
 --------------------------
 Proceso P2:
-Tiempo de retorno: 14
-Tiempo de retorno normalizado: 3.5
+Tiempo de retorno: 20
+Tiempo de retorno normalizado: 5.0
 --------------------------
 Proceso P3:
-Tiempo de retorno: 18
-Tiempo de retorno normalizado: 3.0
+Tiempo de retorno: 37
+Tiempo de retorno normalizado: 6.166666666666667
 --------------------------
 Proceso P5:
-Tiempo de retorno: 18
-Tiempo de retorno normalizado: 2.25
+Tiempo de retorno: 40
+Tiempo de retorno normalizado: 5.0
 --------------------------
 Proceso P1:
-Tiempo de retorno: 29
-Tiempo de retorno normalizado: 3.2222222222222223
+Tiempo de retorno: 51
+Tiempo de retorno normalizado: 5.666666666666667
 --------------------------
-Tiempo medio de retorno: 16.4
-CPU utilizada por procesos: 29 (96.67%)
-CPU utilizada por SO: 0 (0.00%)
-CPU ociosa: 1 (3.33%)
+Tiempo medio de retorno: 31.4
+CPU utilizada por procesos: 29 (55.77%)
+CPU utilizada por SO: 22 (42.31%)
+CPU ociosa: 1 (1.92%)
